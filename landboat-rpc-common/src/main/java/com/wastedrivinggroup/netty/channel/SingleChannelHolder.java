@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author chen
  * @date 2021/6/16
  **/
-public class SingleChannelHolder implements ChannelHolder {
+public class SingleChannelHolder implements ChannelChoose {
 
 	private static final SingleChannelHolder INSTANCE = new SingleChannelHolder();
 
@@ -26,7 +26,7 @@ public class SingleChannelHolder implements ChannelHolder {
 	}
 
 	@Override
-	public Channel getChannel(String key) {
+	public Channel getChannel() {
 		if (Objects.isNull(channel)) {
 			throw new RuntimeException("Channel is null");
 		}
