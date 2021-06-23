@@ -12,20 +12,19 @@ import java.util.Objects;
  * @author chen
  * @date 2021/6/16
  **/
-public class SingleChannelHolder implements ChannelChoose {
+public class SingleChannelHolder implements ChannelHolder<Void> {
 
 	private static final SingleChannelHolder INSTANCE = new SingleChannelHolder();
 
 	private SingleChannelHolder() {
 	}
 
-	private static Channel channel;
+	private Channel channel;
 
-	public void setChannel(Channel channel) {
-		SingleChannelHolder.channel = channel;
+	public static SingleChannelHolder getInstance() {
+		return INSTANCE;
 	}
 
-	@Override
 	public Channel getChannel() {
 		if (Objects.isNull(channel)) {
 			throw new RuntimeException("Channel is null");
@@ -33,7 +32,23 @@ public class SingleChannelHolder implements ChannelChoose {
 		return channel;
 	}
 
-	public static SingleChannelHolder getInstance() {
-		return INSTANCE;
+	@Override
+	public Channel get(Void key) {
+		if (Objects.isNull(channel)) {
+			throw new RuntimeException("Channel is null");
+		}
+		return channel;
+	}
+
+	@Override
+	public void add(Void key, Channel channel) {
+		this.channel = channel;
+	}
+
+	@Override
+	public Channel remove(Void key) {
+		Channel ans = channel;
+		channel = null;
+		return ans;
 	}
 }

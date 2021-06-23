@@ -1,7 +1,5 @@
 package com.wastedrivinggroup.service.loadbalance;
 
-import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
-
 /**
  * 负载均衡顶级接口
  *
@@ -9,11 +7,11 @@ import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
  * @date 2021-06-18
  **/
 @FunctionalInterface
-public interface LoadBalance {
+public interface LoadBalance<T> {
 	/**
 	 * 选择一个服务
 	 *
-	 * @return 服务地址
+	 * @return 服务地址或者 channel
 	 */
-	ServiceEndpoint choose();
+	T choose();
 }

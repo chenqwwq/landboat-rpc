@@ -3,23 +3,34 @@ package com.wastedrivinggroup.netty.channel;
 import io.netty.channel.Channel;
 
 /**
+ * Channel 的持有这
+ *
  * @author chen
- * @date 2021/6/22
+ * @date 2021/6/21
  **/
-public interface ChannelHolder<K> {
+public interface ChannelHolder<T> {
 
 	/**
-	 * 增加 Channel
+	 * 获取一个 Channel
 	 *
-	 * @param key     Channel 的相关信息
-	 * @param channel 建立的Channel
+	 * @param key Channel特征,服务名称
+	 * @return {@link Channel}
 	 */
-	void addChannel(K key, Channel channel);
+	Channel get(T key);
 
 	/**
-	 * 删除一个 Channel
+	 * 新增Channel
+	 *
+	 * @param key     键
+	 * @param channel {@link Channel]}
+	 */
+	void add(T key, Channel channel);
+
+	/**
+	 * 删除 Channel
 	 *
 	 * @param key 键
+	 * @return 被删除的 Channel
 	 */
-	void removeChannel(K key);
+	Channel remove(T key);
 }
