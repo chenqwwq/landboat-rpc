@@ -8,7 +8,7 @@ import java.util.List;
  * @author chen
  * @date 2021/6/19
  **/
-public abstract class CacheableServiceDiscovery implements ServiceDiscovery {
+public abstract class CacheableServiceDiscovery implements DiscoveryPolicy {
 	@Override
 	public List<ServiceEndpoint> discovery(String serviceName) {
 		final List<ServiceEndpoint> endpoints = ServiceDiscoveryCache.getEndpointList(serviceName);

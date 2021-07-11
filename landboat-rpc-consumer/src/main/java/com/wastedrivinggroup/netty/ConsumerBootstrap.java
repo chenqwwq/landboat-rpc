@@ -7,6 +7,8 @@ import com.wastedrivinggroup.netty.proto.decoder.GsonDecoder;
 import com.wastedrivinggroup.netty.proto.demo.InvokeRespProto;
 import com.wastedrivinggroup.netty.proto.encoder.GsonEncoder;
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -45,6 +47,15 @@ public class ConsumerBootstrap extends AbstractNettyClientBootstrap {
 						ch.pipeline().addLast(new DebugLogHandler());
 					}
 				});
-		ChannelHolder.getInstance().setChannel(bootstrap.connect("localhost", 8888).sync().channel());
+		ChannelHolder.getInstance().setChannel(bootstrap.connect("127.0.1.1", 8889).addListener(new ChannelFutureListener() {
+			@Override
+			public void operationComplete(ChannelFuture future) throws Exception {
+				if (future.isSuccess()) {
+					log.info("connect server success.");
+				} else {
+					log.info("connect server failure.");
+				}
+			}
+		}).sync().channel());
 	}
 }

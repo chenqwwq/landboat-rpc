@@ -9,7 +9,7 @@ import java.util.List;
  * @author chen
  * @date 2021/6/20
  **/
-public class ServiceDiscoveryChain implements ServiceDiscovery {
+public class ServiceDiscoveryChain implements DiscoveryPolicy {
 
 	private static final List<CacheableServiceDiscovery> discoveries;
 

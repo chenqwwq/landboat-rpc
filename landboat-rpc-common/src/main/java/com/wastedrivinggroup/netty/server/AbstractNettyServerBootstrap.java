@@ -56,8 +56,9 @@ public abstract class AbstractNettyServerBootstrap implements RpcBootstrap {
 		init();
 		serverBootstrap.bind(NettyServerConfig.getHost(), NettyServerConfig.getPort()).sync().addListener((ChannelFutureListener) future -> {
 			if (future.isSuccess()) {
+				// TODO: 设置监听器,例如服务的注册都需要通过监听器来实现，确保在 Netty 服务起来之后再注册【】
 				if (log.isInfoEnabled()) {
-					log.info("rpc server start success.");
+					log.info("rpc server start success,[host:{},port:{}]", NettyServerConfig.getHost(), NettyServerConfig.getPort());
 				}
 				GracefulShutdownChain.addShutdown(() -> {
 					try {

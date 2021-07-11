@@ -17,26 +17,25 @@ import java.util.List;
  **/
 public class ServiceRegisterChain implements RegisterPolicy {
 	private static final ServiceRegisterChain INSTANCE = new ServiceRegisterChain();
-	private static List<RegisterPolicy> policies;
+	private static final List<RegisterPolicy> POLICIES;
 
 	static {
-		policies = new ArrayList<>();
-		policies.add(new ConsulServiceRegister());
+		POLICIES = new ArrayList<>();
+		POLICIES.add(new ConsulServiceRegister());
 	}
 
 	@Override
 	public void registered(String serviceName) {
-		for (RegisterPolicy node : policies) {
+		for (RegisterPolicy node : POLICIES) {
 			if (node.isValid()) {
 				node.registered(serviceName);
 			}
 		}
-
 	}
 
 	@Override
 	public void disRegistered(String serviceName) {
-		for (RegisterPolicy node : policies) {
+		for (RegisterPolicy node : POLICIES) {
 			if (node.isRegistered(serviceName)) {
 				node.disRegistered(serviceName);
 			}

@@ -3,10 +3,12 @@ package com.wastedrivinggroup.service.naming.utils;
 import java.lang.reflect.Method;
 
 /**
+ * 二级服务名称的创建者
+ *
  * @author chen
  * @date 2021/6/16
  **/
-public class ServiceNameBuilder {
+public class SimpleServiceNameBuilder {
 
 	public static String buildServiceName(Method method) {
 		return buildServiceName(method.getDeclaringClass().getSimpleName(), method);

@@ -31,7 +31,7 @@ public class NettyServerConfig {
 			final InetAddress localHost = InetAddress.getLocalHost();
 			HOST = localHost.getHostAddress();
 			SERVICE_NAME = localHost.getHostName();
-			PORT = 8888;
+			PORT = 8889;
 		} catch (UnknownHostException e) {
 			// NOOP
 		}

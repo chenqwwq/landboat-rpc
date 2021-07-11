@@ -8,7 +8,7 @@ import java.util.List;
  * @author chen
  * @date 2021-06-18
  **/
-public interface ServiceDiscovery {
+public interface DiscoveryPolicy {
 	/**
 	 * 服务发现
 	 *

@@ -1,6 +1,6 @@
 package com.wastedrivinggroup.provider.service;
 
-import com.wastedrivinggroup.service.naming.utils.ServiceNameBuilder;
+import com.wastedrivinggroup.service.naming.utils.SimpleServiceNameBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -11,19 +11,20 @@ import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 服务提供方的服务持有者类
+ * 该类持有所有的服务元数据，就是{@link ReflectService}
+ * 并且负责管理和调度请求
+ * <p>
+ * 目前仅仅支持整个服务统一服务名,可以考虑某些方法可以自定义注册的服务名称
+ * <p>
+ * TODO: 类的功能太多了,服务加载和服务持有可以分开
+ *
  * @author chen
  * @date 2021/6/15
  **/
 @Slf4j
 public class ServiceHolder {
 
-	@Getter
-	@AllArgsConstructor
-	static final class ReflectService {
-		private final Method method;
-
-		private final Object object;
-	}
 
 	/**
 	 * ServiceName --> Method
@@ -66,7 +67,7 @@ public class ServiceHolder {
 				continue;
 			}
 			cnt++;
-			final String serviceName = ServiceNameBuilder.buildServiceName(classFullName, method);
+			final String serviceName = SimpleServiceNameBuilder.buildServiceName(classFullName, method);
 			final ReflectService targetService = new ReflectService(method, object);
 			final ReflectService oldService = SERVICE_MAP.putIfAbsent(serviceName, targetService);
 			if (oldService != null) {
@@ -108,4 +109,21 @@ public class ServiceHolder {
 		}
 	}
 
+	/**
+	 * 服务元数据接口
+	 */
+	public interface ServiceMetadata {
+
+	}
+
+	/**
+	 * 服务元数据类
+	 */
+	@Getter
+	@AllArgsConstructor
+	static final class ReflectService {
+		private final Method method;
+
+		private final Object object;
+	}
 }

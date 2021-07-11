@@ -3,7 +3,7 @@ package com.wastedrivinggroup.consumer.rpc;
 import com.google.gson.Gson;
 import com.wastedrivinggroup.netty.channel.SingleChannelHolder;
 import com.wastedrivinggroup.netty.proto.demo.InvokeReqProto;
-import com.wastedrivinggroup.service.naming.utils.ServiceNameBuilder;
+import com.wastedrivinggroup.service.naming.utils.SimpleServiceNameBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
@@ -39,7 +39,7 @@ public class InvokeProxy implements InvocationHandler {
 	private InvokeReqProto wrapInvokeReq(Method method, Object[] args) {
 		return new InvokeReqProto()
 				.setInvokeId(1L)
-				.setServiceName(ServiceNameBuilder.buildServiceName(method))
+				.setServiceName(SimpleServiceNameBuilder.buildServiceName(method))
 				.setArgs(args);
 
 	}
