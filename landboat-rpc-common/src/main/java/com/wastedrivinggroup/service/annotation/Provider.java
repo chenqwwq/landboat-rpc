@@ -11,8 +11,8 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ServiceProvider {
+public @interface Provider {
 
-    Class<? extends RegisterPolicy>[] register();
+	Class<? extends RegisterPolicy>[] register();
 }
 

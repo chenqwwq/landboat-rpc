@@ -1,7 +1,6 @@
 package com.wastedrivinggroup.client;
 
 import com.wastedrivinggroup.consumer.rpc.InvokeProxy;
-import com.wastedrivinggroup.netty.ConsumerBootstrap;
 import com.wastedrivinggroup.service.naming.consul.ConsulServiceDiscovery;
 
 /**

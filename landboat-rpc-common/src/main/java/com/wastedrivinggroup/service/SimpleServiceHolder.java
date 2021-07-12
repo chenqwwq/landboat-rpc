@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service.utils;
+package com.wastedrivinggroup.service;
 
 /**
  * @author chen

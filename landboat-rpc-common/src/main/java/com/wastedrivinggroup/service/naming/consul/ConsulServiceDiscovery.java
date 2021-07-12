@@ -18,6 +18,7 @@ import java.util.List;
  **/
 @Slf4j
 public class ConsulServiceDiscovery implements DiscoveryPolicy {
+
 	@Override
 	public List<ServiceEndpoint> discovery(String serviceName) {
 		if (!ConsulClientHolder.existClient()) {
