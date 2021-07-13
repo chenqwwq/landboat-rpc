@@ -1,25 +1,29 @@
 package com.wastedrivinggroup.consumer.rpc;
 
-import com.google.gson.Gson;
-import com.wastedrivinggroup.netty.channel.SingleChannelHolder;
-import com.wastedrivinggroup.netty.proto.demo.InvokeReqProto;
-import com.wastedrivinggroup.service.naming.utils.SimpleServiceNameBuilder;
+import com.wastedrivinggroup.service.RpcInvoker;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Objects;
 
 /**
+ * 针对一个单个接口的 {@link InvocationHandler}
+ * <p>
+ * 构造函数需要传递一个接口类
+ *
  * @author chen
  * @date 2021/6/16
  **/
 @Slf4j
 public class InvokeProxy implements InvocationHandler {
 
-	private static final InvokeProxy INSTANCE = new InvokeProxy();
+	private RpcInvokerDispatcher dispatcher;
 
-	Gson gson = new Gson();
+	private InvokeProxy(Class<?> clazz) {
+		this.dispatcher = new RpcInvokerDispatcher(clazz);
+	}
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -27,21 +31,13 @@ public class InvokeProxy implements InvocationHandler {
 		if ("toString".equals(methodName) || "hashCode".equals(methodName) || "equals".equals(methodName)) {
 			return method.invoke(proxy, args);
 		}
-		// 封装请求
-		final InvokeReqProto req = wrapInvokeReq(method, args);
-		// 发送请求
-		SingleChannelHolder.getInstance().getChannel().writeAndFlush(req);
-		// 发送请求后在接收请求前应该阻塞当前线程
-		String res = ResponseBuffer.getResp(req.getInvokeId());
-		return gson.fromJson(res, method.getGenericReturnType());
-	}
 
-	private InvokeReqProto wrapInvokeReq(Method method, Object[] args) {
-		return new InvokeReqProto()
-				.setInvokeId(1L)
-				.setServiceName(SimpleServiceNameBuilder.buildServiceName(method))
-				.setArgs(args);
-
+		final RpcInvoker rpcInvoker = dispatcher.getRpcInvoker(method);
+		if (Objects.isNull(rpcInvoker)) {
+			log.error("rpc invoker not found,[className:{},methodName:{}]", method.getClass().getName(), method.getName());
+			throw new IllegalArgumentException("invok failure, rpc invoker not found");
+		}
+		return rpcInvoker.invoke(args);
 	}
 
 	public static <T> T createProxy(Class<T> interfaces) {
@@ -55,7 +51,7 @@ public class InvokeProxy implements InvocationHandler {
 			throw new IllegalArgumentException("can only be applied to interface");
 		}
 		// 直接使用线程上下文类加载器
-		return (T) Proxy.newProxyInstance(classLoader, new Class[]{interfaces}, INSTANCE);
+		return (T) Proxy.newProxyInstance(classLoader, new Class[]{interfaces}, new InvokeProxy(interfaces));
 	}
 
 }

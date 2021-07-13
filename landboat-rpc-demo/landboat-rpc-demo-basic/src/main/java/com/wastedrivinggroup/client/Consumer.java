@@ -1,6 +1,6 @@
 package com.wastedrivinggroup.client;
 
-import com.wastedrivinggroup.consumer.rpc.InvokeProxy;
+import com.wastedrivinggroup.netty.ConsumerBootstrap;
 import com.wastedrivinggroup.service.naming.consul.ConsulServiceDiscovery;
 
 /**
@@ -17,8 +17,8 @@ public class Consumer {
 		clent.start();
 		// 服务发现
 		new ConsulServiceDiscovery().discovery(serviceName);
-		final EchoServiceApi proxy = InvokeProxy.createProxy(EchoServiceApi.class);
-		final String echo = proxy.echo("Hello");
-		System.out.println(echo);
+//		final EchoServiceApi proxy = InvokeProxy.createProxy(EchoServiceApi.class);
+//		final String echo = proxy.echo("Hello");
+//		System.out.println(echo);
 	}
 }
