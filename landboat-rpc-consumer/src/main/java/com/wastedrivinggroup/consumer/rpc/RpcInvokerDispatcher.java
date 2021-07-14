@@ -4,8 +4,7 @@ import com.google.gson.Gson;
 import com.wastedrivinggroup.netty.channel.SingleChannelHolder;
 import com.wastedrivinggroup.netty.proto.demo.InvokeReqProto;
 import com.wastedrivinggroup.service.RpcInvoker;
-import com.wastedrivinggroup.service.RpcInvokerFactory;
-import com.wastedrivinggroup.service.naming.utils.SimpleServiceNameBuilder;
+import com.wastedrivinggroup.service.annotation.Consumer;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -21,11 +20,10 @@ import java.util.concurrent.ConcurrentHashMap;
  **/
 public class RpcInvokerDispatcher {
 	private final Map<Method, RpcInvoker> dispatcher;
-	private RpcInvokerFactory factory;
-	private Class<?> clazz;
+	private final RpcInvokerFactory factory;
 
 	public RpcInvokerDispatcher(Class<?> clazz) {
-		this(DefaultRpcInvoker::new, clazz);
+		this(method -> new DefaultRpcInvoker(method, method.getClass().getSimpleName()), clazz);
 	}
 
 	public RpcInvokerDispatcher(RpcInvokerFactory factory, Class<?> clazz) {
@@ -34,21 +32,46 @@ public class RpcInvokerDispatcher {
 		}
 		this.dispatcher = new ConcurrentHashMap<>();
 		this.factory = factory;
-		this.clazz = clazz;
+	}
+
+	private String getName(Class<?> T) {
+		final Consumer annotation = T.getAnnotation(Consumer.class);
+		if (annotation == null) {
+			throw new IllegalArgumentException("Can't found annotation in the interface,[interface name:{" + T.getSimpleName() + "}]");
+		}
+		final String[] value = annotation.value();
+		if (value.length == 0) {
+			throw new IllegalArgumentException("require value in consumer annotation");
+		}
+		return value[0];
 	}
 
 	public RpcInvoker getRpcInvoker(Method method) {
-		return dispatcher.get(method);
+		synchronized (dispatcher) {
+			RpcInvoker invoker = dispatcher.getOrDefault(method, factory.getInvoke(method));
+			if (dispatcher.containsKey(method)) {
+				dispatcher.put(method, invoker);
+			}
+			return invoker;
+		}
 	}
 
 	static class DefaultRpcInvoker implements RpcInvoker {
 
 		private final Gson gson;
 		private final Method method;
+		private final String serviceFullName;
 
-		public DefaultRpcInvoker(Method method) {
+		public DefaultRpcInvoker(Method method, String name) {
 			this.gson = new Gson();
 			this.method = method;
+
+			StringBuilder sb = new StringBuilder(name);
+			sb.append(":").append(method.getName());
+			for (Class<?> clazz : method.getParameterTypes()) {
+				sb.append(":").append(clazz.getSimpleName());
+			}
+			serviceFullName = sb.toString();
 		}
 
 		@Override
@@ -65,7 +88,7 @@ public class RpcInvokerDispatcher {
 		private InvokeReqProto wrapInvokeReq(Method method, Object[] args) {
 			return new InvokeReqProto()
 					.setInvokeId(1L)
-					.setServiceName(SimpleServiceNameBuilder.buildServiceName(method))
+					.setServiceName(serviceFullName)
 					.setArgs(args);
 
 		}

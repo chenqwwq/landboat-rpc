@@ -9,9 +9,17 @@ import java.lang.reflect.Proxy;
 import java.util.Objects;
 
 /**
- * 针对一个单个接口的 {@link InvocationHandler}
+ * JDK 动态代理所需要的 {@link InvocationHandler}
  * <p>
- * 构造函数需要传递一个接口类
+ * 创建一个 Rpc 接口的代理的时候需要新建一个，不能共用
+ * 不共用的原因是隔离一些基本的处理类，类似异常处理等，每个服务可能会有不同的报错信息
+ * <p>
+ * 构造函数需要传递一个接口类,在创建的时候可以直接解析接口上的注解,{@link com.wastedrivinggroup.service.annotation.Consumer}
+ * // TODO: 注解中可以添加该类的异常处理
+ * <p>
+ * 每个 {@link InvokeProxy} 包含一个 {@link RpcInvokerDispatcher}
+ * 其中包含了每个方法的的调用对象 {@link RpcInvoker}，{@link RpcInvoker} 使用 {@link RpcInvokerFactory} 解析方法产生
+ * 采用单个方法不同实际调用类的形式，可以使方法之间相互隔离，可以包含一些额外的功能，比如不同的重试策略等
  *
  * @author chen
  * @date 2021/6/16
@@ -39,6 +47,8 @@ public class InvokeProxy implements InvocationHandler {
 		}
 		return rpcInvoker.invoke(args);
 	}
+
+	// Create Proxy
 
 	public static <T> T createProxy(Class<T> interfaces) {
 		return createProxy(Thread.currentThread().getContextClassLoader(), interfaces);

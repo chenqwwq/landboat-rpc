@@ -1,7 +1,6 @@
 package com.wastedrivinggroup.client;
 
-import com.wastedrivinggroup.netty.ConsumerBootstrap;
-import com.wastedrivinggroup.service.naming.consul.ConsulServiceDiscovery;
+import com.wastedrivinggroup.consumer.rpc.InvokeProxy;
 
 /**
  * @author chen
@@ -12,13 +11,8 @@ public class Consumer {
 	public static final String serviceName = "echo";
 
 	public static void main(String[] args) throws InterruptedException {
-		// 启动 Netty 客户端
-		ConsumerBootstrap clent = new ConsumerBootstrap();
-		clent.start();
-		// 服务发现
-		new ConsulServiceDiscovery().discovery(serviceName);
-//		final EchoServiceApi proxy = InvokeProxy.createProxy(EchoServiceApi.class);
-//		final String echo = proxy.echo("Hello");
-//		System.out.println(echo);
+		final EchoServiceApi proxy = InvokeProxy.createProxy(EchoServiceApi.class);
+		final String echo = proxy.echo("老子天下无敌");
+		System.out.println(echo);
 	}
 }

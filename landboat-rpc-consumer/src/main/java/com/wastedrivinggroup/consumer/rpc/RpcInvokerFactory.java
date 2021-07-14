@@ -1,4 +1,6 @@
-package com.wastedrivinggroup.service;
+package com.wastedrivinggroup.consumer.rpc;
+
+import com.wastedrivinggroup.service.RpcInvoker;
 
 import java.lang.reflect.Method;
 
