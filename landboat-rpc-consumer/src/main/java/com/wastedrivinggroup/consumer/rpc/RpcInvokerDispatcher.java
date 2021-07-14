@@ -5,6 +5,7 @@ import com.wastedrivinggroup.netty.channel.SingleChannelHolder;
 import com.wastedrivinggroup.netty.proto.demo.InvokeReqProto;
 import com.wastedrivinggroup.service.RpcInvoker;
 import com.wastedrivinggroup.service.annotation.Consumer;
+import com.wastedrivinggroup.service.naming.ServiceDiscoveryChain;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -21,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RpcInvokerDispatcher {
 	private final Map<Method, RpcInvoker> dispatcher;
 	private final RpcInvokerFactory factory;
+
 
 	public RpcInvokerDispatcher(Class<?> clazz) {
 		this(method -> new DefaultRpcInvoker(method, method.getClass().getSimpleName()), clazz);
@@ -72,6 +74,8 @@ public class RpcInvokerDispatcher {
 				sb.append(":").append(clazz.getSimpleName());
 			}
 			serviceFullName = sb.toString();
+
+			ServiceDiscoveryChain.getInstance().discovery(serviceFullName);
 		}
 
 		@Override

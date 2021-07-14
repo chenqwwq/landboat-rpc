@@ -2,7 +2,7 @@ package com.wastedrivinggroup.service.naming;
 
 import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author chen
@@ -15,5 +15,5 @@ public interface DiscoveryPolicy {
 	 * @param serviceName 服务名称
 	 * @return 服务点 {@link ServiceEndpoint}
 	 */
-	List<ServiceEndpoint> discovery(String serviceName);
+	Set<ServiceEndpoint> discovery(String serviceName);
 }

@@ -1,11 +1,11 @@
 package com.wastedrivinggroup.service.naming;
 
+import com.google.common.collect.Sets;
 import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -16,19 +16,19 @@ import java.util.concurrent.ConcurrentHashMap;
  **/
 @Slf4j
 public class ServiceDiscoveryCache {
-	private static final Map<String, List<ServiceEndpoint>> cache;
+	private static final Map<String, Set<ServiceEndpoint>> cache;
 
 	static {
 		cache = new ConcurrentHashMap<>();
 	}
 
-	public static List<ServiceEndpoint> getEndpointList(String serviceName) {
+	public static Set<ServiceEndpoint> getEndpointList(String serviceName) {
 		return cache.get(serviceName);
 	}
 
-	public static void addEndpoint(String serviceName, List<ServiceEndpoint> endpoints) {
+	public static void addEndpoint(String serviceName, Set<ServiceEndpoint> endpoints) {
 		synchronized (cache) {
-			final List<ServiceEndpoint> orDefault = cache.getOrDefault(serviceName, new ArrayList<>());
+			final Set<ServiceEndpoint> orDefault = cache.getOrDefault(serviceName, Sets.newHashSet());
 			orDefault.addAll(endpoints);
 			cache.put(serviceName, orDefault);
 		}
@@ -36,7 +36,7 @@ public class ServiceDiscoveryCache {
 
 	public static void addEndpoint(String serviceName, ServiceEndpoint endpoint) {
 		synchronized (cache) {
-			final List<ServiceEndpoint> orDefault = cache.getOrDefault(serviceName, new ArrayList<>());
+			final Set<ServiceEndpoint> orDefault = cache.getOrDefault(serviceName, Sets.newHashSet());
 			orDefault.add(endpoint);
 			cache.put(serviceName, orDefault);
 		}

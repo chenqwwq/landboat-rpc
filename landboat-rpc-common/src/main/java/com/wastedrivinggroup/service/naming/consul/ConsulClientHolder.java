@@ -23,6 +23,7 @@ public class ConsulClientHolder {
 	private static ConcurrentHashMap<HostAndPort, Consul> consulMap;
 
 	static {
+		// TODO: Consul 配置的读取
 		consulMap = new ConcurrentHashMap<>();
 		final HostAndPort hostAndPort = HostAndPort.fromString("localhost:8500");
 		final Consul build = Consul.builder().withHostAndPort(hostAndPort).withPing(false).build();

@@ -1,5 +1,6 @@
 package com.wastedrivinggroup.service.naming.consul;
 
+import com.google.common.collect.Sets;
 import com.orbitz.consul.HealthClient;
 import com.orbitz.consul.model.ConsulResponse;
 import com.orbitz.consul.model.health.ServiceHealth;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 基于 {@link com.orbitz.consul.Consul} 的服务发现方法
@@ -20,11 +22,11 @@ import java.util.List;
 public class ConsulServiceDiscovery implements DiscoveryPolicy {
 
 	@Override
-	public List<ServiceEndpoint> discovery(String serviceName) {
+	public Set<ServiceEndpoint> discovery(String serviceName) {
 		if (!ConsulClientHolder.existClient()) {
 			throw new RuntimeException("No consul servers have been connected");
 		}
-		List<ServiceEndpoint> endpoints = new ArrayList<>();
+		Set<ServiceEndpoint> endpoints = Sets.newHashSet();
 		final List<HealthClient> healthClient = ConsulClientHolder.getHealthClient();
 		for (HealthClient client : healthClient) {
 			final ConsulResponse<List<ServiceHealth>> healthyServiceInstances = client.getHealthyServiceInstances(serviceName);
