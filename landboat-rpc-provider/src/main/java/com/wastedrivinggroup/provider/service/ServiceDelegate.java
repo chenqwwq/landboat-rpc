@@ -16,8 +16,8 @@ import java.util.Objects;
 public class ServiceDelegate {
 
 	public static Object invoke(String serviceName, Object[] args) throws InvocationTargetException, IllegalAccessException {
-		final ServiceHolder holder = ServiceHolder.getInstance();
-		final ServiceHolder.ReflectService service = holder.findService(serviceName);
+		final ServiceDict holder = ServiceDict.getInstance();
+		final ServiceDict.ReflectService service = holder.findService(serviceName);
 		if (Objects.isNull(service)) {
 			throw new ServiceNotFoundException(serviceName);
 		}

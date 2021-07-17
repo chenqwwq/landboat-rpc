@@ -1,15 +1,18 @@
 package com.wastedrivinggroup.consumer.rpc;
 
 import com.google.gson.Gson;
-import com.wastedrivinggroup.netty.channel.SingleChannelHolder;
 import com.wastedrivinggroup.netty.proto.demo.InvokeReqProto;
 import com.wastedrivinggroup.service.RpcInvoker;
-import com.wastedrivinggroup.service.annotation.Consumer;
+import com.wastedrivinggroup.service.naming.ServiceCenter;
 import com.wastedrivinggroup.service.naming.ServiceDiscoveryChain;
+import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
+import io.netty.channel.Channel;
 
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 保存一个类中的 <{@link Method},{@link RpcInvoker}> 映射
@@ -22,30 +25,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RpcInvokerDispatcher {
 	private final Map<Method, RpcInvoker> dispatcher;
 	private final RpcInvokerFactory factory;
+	private final String name;
 
 
-	public RpcInvokerDispatcher(Class<?> clazz) {
-		this(method -> new DefaultRpcInvoker(method, method.getClass().getSimpleName()), clazz);
+	public RpcInvokerDispatcher(String name, Class<?> clazz) {
+		this(name, method -> new DefaultRpcInvoker(method, name), clazz);
 	}
 
-	public RpcInvokerDispatcher(RpcInvokerFactory factory, Class<?> clazz) {
+	public RpcInvokerDispatcher(String name, RpcInvokerFactory factory, Class<?> clazz) {
+		this.name = name;
 		if (!clazz.isInterface()) {
 			throw new IllegalArgumentException("initial RpcInvokerDispatcher failure,must be interface");
 		}
 		this.dispatcher = new ConcurrentHashMap<>();
 		this.factory = factory;
-	}
-
-	private String getName(Class<?> T) {
-		final Consumer annotation = T.getAnnotation(Consumer.class);
-		if (annotation == null) {
-			throw new IllegalArgumentException("Can't found annotation in the interface,[interface name:{" + T.getSimpleName() + "}]");
-		}
-		final String[] value = annotation.value();
-		if (value.length == 0) {
-			throw new IllegalArgumentException("require value in consumer annotation");
-		}
-		return value[0];
 	}
 
 	public RpcInvoker getRpcInvoker(Method method) {
@@ -62,29 +55,31 @@ public class RpcInvokerDispatcher {
 
 		private final Gson gson;
 		private final Method method;
-		private final String serviceFullName;
+		private final String functionName;
+		private final String serviceName;
 
 		public DefaultRpcInvoker(Method method, String name) {
 			this.gson = new Gson();
 			this.method = method;
+			this.serviceName = name;
+			final RpcClient annotation = method.getAnnotation(RpcClient.class);
+			this.functionName = annotation.value();
 
-			StringBuilder sb = new StringBuilder(name);
-			sb.append(":").append(method.getName());
-			for (Class<?> clazz : method.getParameterTypes()) {
-				sb.append(":").append(clazz.getSimpleName());
-			}
-			serviceFullName = sb.toString();
-
-			ServiceDiscoveryChain.getInstance().discovery(serviceFullName);
+			final Set<ServiceEndpoint> discovery = ServiceDiscoveryChain.getInstance().discovery(name);
+			ServiceCenter.addEndpoint(name, discovery);
 		}
 
 		@Override
-		public Object invoke(Object[] args) throws InterruptedException {
+		public Object invoke(Object[] args) throws InterruptedException, ExecutionException {
 			// 封装请求
 			final InvokeReqProto req = wrapInvokeReq(method, args);
 			// 发送请求
-			SingleChannelHolder.getInstance().getChannel().writeAndFlush(req);
+			final Set<ServiceEndpoint> endpointList = ServiceCenter.getEndpointList(serviceName);
+			final ServiceEndpoint serviceEndpoint = endpointList.stream().findAny().get();
+			final Channel channel = Channels.getInstance().get(serviceEndpoint).acquire().sync().get();
+			channel.writeAndFlush(req);
 			// 发送请求后在接收请求前应该阻塞当前线程
+			// TODO: 异步转同步的方案可以重新设计以下,例如可以使用和 Dubbo 一样 CompletableFuture
 			String res = ResponseBuffer.getResp(req.getInvokeId());
 			return gson.fromJson(res, method.getGenericReturnType());
 		}
@@ -92,11 +87,8 @@ public class RpcInvokerDispatcher {
 		private InvokeReqProto wrapInvokeReq(Method method, Object[] args) {
 			return new InvokeReqProto()
 					.setInvokeId(1L)
-					.setServiceName(serviceFullName)
+					.setServiceName(functionName)
 					.setArgs(args);
-
 		}
-
 	}
-
 }

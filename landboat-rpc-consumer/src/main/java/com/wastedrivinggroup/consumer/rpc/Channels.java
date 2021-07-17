@@ -28,11 +28,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Channels extends AbstractChannelPoolMap<ServiceEndpoint, ChannelPool> {
 
+	private static final Channels INSTANCE = new Channels();
+
+	public static Channels getInstance() {
+		return INSTANCE;
+	}
+
+	private Channels() {
+
+	}
+
 	public static final String CHANNEL_BELONG_ATTRIBUTE_NAME = "channel.belong";
 
 	public static final AttributeKey<ServiceEndpoint> CHANNEL_BELONG_ENDPOINT;
 
-	public BootstrapFactory bootstrapFactory;
+	public static BootstrapFactory bootstrapFactory;
 
 	static {
 		try {
@@ -41,6 +51,7 @@ public class Channels extends AbstractChannelPoolMap<ServiceEndpoint, ChannelPoo
 			log.error("channel belong attribute name exist, initial failure, [attribute name:{}]", CHANNEL_BELONG_ATTRIBUTE_NAME);
 			throw ex;
 		}
+		bootstrapFactory = new NioBootstrapFactory();
 	}
 
 	@Override
@@ -50,23 +61,6 @@ public class Channels extends AbstractChannelPoolMap<ServiceEndpoint, ChannelPoo
 
 
 	// inner class
-
-
-	static class ConsumerChannelInitializer extends ChannelInitializer<SocketChannel> {
-
-		@Override
-		protected void initChannel(SocketChannel ch) throws Exception {
-			ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(1024, 0, 2, 0, 2));
-			// LengthFieldPrepender是一个编码器，主要是在响应字节数据前面添加字节长度字段
-			ch.pipeline().addLast(new LengthFieldPrepender(2));
-			// 对经过粘包和拆包处理之后的数据进行json反序列化，从而得到User对象
-			ch.pipeline().addLast(new GsonDecoder<>(InvokeRespProto.class));
-			ch.pipeline().addLast(new GsonEncoder());
-			ch.pipeline().addLast(new ResponseReceiveHandler());
-			// 对响应数据进行编码，主要是将User对象序列化为json
-			ch.pipeline().addLast(new DebugLogHandler());
-		}
-	}
 
 	static class SimpleChannelPoolChannel implements ChannelPoolHandler {
 
@@ -94,7 +88,20 @@ public class Channels extends AbstractChannelPoolMap<ServiceEndpoint, ChannelPoo
 
 		@Override
 		public void channelCreated(Channel ch) throws Exception {
-			ch.pipeline().addLast(new ConsumerChannelInitializer());
+			ch.pipeline().addLast(new ChannelInitializer<SocketChannel>() {
+				@Override
+				protected void initChannel(SocketChannel ch) throws Exception {
+					ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(1024, 0, 2, 0, 2));
+					// LengthFieldPrepender是一个编码器，主要是在响应字节数据前面添加字节长度字段
+					ch.pipeline().addLast(new LengthFieldPrepender(2));
+					// 对经过粘包和拆包处理之后的数据进行json反序列化，从而得到User对象
+					ch.pipeline().addLast(new GsonDecoder<>(InvokeRespProto.class));
+					ch.pipeline().addLast(new GsonEncoder());
+					ch.pipeline().addLast(new ResponseReceiveHandler());
+					// 对响应数据进行编码，主要是将User对象序列化为json
+					ch.pipeline().addLast(new DebugLogHandler());
+				}
+			});
 			if (log.isInfoEnabled()) {
 				log.info("create channel success,[host:{},port:{}]", serviceEndpoint.getHost(), serviceEndpoint.getPort());
 			}

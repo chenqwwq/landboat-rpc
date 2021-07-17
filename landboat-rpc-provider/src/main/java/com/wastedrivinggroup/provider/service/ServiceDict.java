@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2021/6/15
  **/
 @Slf4j
-public class ServiceHolder {
+public class ServiceDict {
 
 
 	/**
@@ -43,7 +43,7 @@ public class ServiceHolder {
 		loadedClass = new HashSet<>();
 	}
 
-	public static ServiceHolder getInstance() {
+	public static ServiceDict getInstance() {
 		return RealServiceHolder.getInstance();
 	}
 
@@ -102,9 +102,9 @@ public class ServiceHolder {
 	 * 静态内部类实现单例
 	 */
 	private static final class RealServiceHolder {
-		private static final ServiceHolder INSTANCE = new ServiceHolder();
+		private static final ServiceDict INSTANCE = new ServiceDict();
 
-		public static ServiceHolder getInstance() {
+		public static ServiceDict getInstance() {
 			return INSTANCE;
 		}
 	}

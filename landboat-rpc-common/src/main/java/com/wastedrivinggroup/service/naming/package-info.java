@@ -2,10 +2,16 @@
  * 服务注册和发现的相关类族
  * <p>
  * ## 服务的命名规则
+ * 服务的名称公共分为以下几个部分:
+ * 一级名称(服务名称 ServiceName) ： 二级名称(功能名称 Function Name))
  * <p>
- * 服务堆外提供一个统一的一级服务名称
+ * 服务对外提供一个统一的一级服务名称
+ * 可以使用 {@link com.wastedrivinggroup.service.naming.ServiceRegisterChain#registered(java.lang.String)} 向多个注册中西你注册
  * <br>
- * 内部使用类名和方法名以及方法参数类型组成二级服务名称
+ * 内部使用类名和方法名以及方法参数类型组成二级服务名称.
+ * // TODO: 后续可以采用注解指定简短的服务名
+ * 默认为 类名:方法名:参数类型名:..
+ * <p>
  * <p>
  * ## 服务字典
  * <p>
@@ -25,7 +31,7 @@
  *
  * <p>
  * {@link com.wastedrivinggroup.service.naming.RegisterPolicy} 为基础的服务注册接口
- * {@link com.wastedrivinggroup.service.naming.ServiceDiscovery} 为基础的服务发现接口
+ * {@link com.wastedrivinggroup.service.naming.DiscoveryPolicy} 为基础的服务发现接口
  * <p>
  * {@link com.wastedrivinggroup.service.naming.consul} 保存的是以 Consul 为目标的服务注册和发现逻辑
  * {@link com.wastedrivinggroup.service.naming.redis} 保存的是以 Redis 为目标的服务注册和发现逻辑
