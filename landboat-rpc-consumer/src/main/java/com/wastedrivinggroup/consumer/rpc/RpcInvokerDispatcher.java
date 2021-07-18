@@ -15,16 +15,32 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 
 /**
+ * 在 {@link InvokeProxy} 中被持有
+ * <p>
+ * 一个接口对映的一个 {@link RpcInvokerDispatcher} 类
+ * <p>
  * 保存一个类中的 <{@link Method},{@link RpcInvoker}> 映射
  * <p>
- * 持有 {@link RpcInvokerFactory} 引用，在解析接口时创建 {@link RpcInvoker}
  *
  * @author chen
  * @date 2021/7/13
  **/
 public class RpcInvokerDispatcher {
+	/**
+	 * 每个方法对应的调用的实现
+	 * <p>
+	 * 根据方法上对应的注解实现不同的 {@link RpcInvoker}
+	 */
 	private final Map<Method, RpcInvoker> dispatcher;
+
+	/**
+	 * 创建 {@link RpcInvoker} 的工厂类
+	 */
 	private final RpcInvokerFactory factory;
+
+	/**
+	 * 服务名称
+	 */
 	private final String name;
 
 

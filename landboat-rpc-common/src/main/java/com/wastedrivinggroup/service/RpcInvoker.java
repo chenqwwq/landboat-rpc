@@ -3,7 +3,6 @@ package com.wastedrivinggroup.service;
 /**
  * 执行具体的 Rpc 调用接口
  * <p>
- * 一个方法对应的一个该接口实现
  *
  * @author chen
  * @date 2021/7/13

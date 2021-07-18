@@ -15,5 +15,5 @@ public @interface Consumer {
 	/**
 	 * @return 服务名称
 	 */
-	String[] value();
+	String value();
 }

@@ -3,6 +3,7 @@ package com.wastedrivinggroup.consumer.rpc;
 import com.wastedrivinggroup.service.RpcInvoker;
 import com.wastedrivinggroup.service.annotation.Consumer;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -17,6 +18,7 @@ import java.util.Objects;
  * // TODO: 异常处理可以后续实现
  * <p>
  * 构造函数需要传递一个接口类,在创建的时候可以直接解析接口上的注解,{@link com.wastedrivinggroup.service.annotation.Consumer}
+ * 所以一个 InvokeProxy 只对应一个服务
  * // TODO: 注解中可以添加该类的异常处理
  * <p>
  * 每个 {@link InvokeProxy} 包含一个 {@link RpcInvokerDispatcher}
@@ -29,30 +31,37 @@ import java.util.Objects;
 @Slf4j
 public class InvokeProxy implements InvocationHandler {
 
+	/**
+	 * 方法和具体调用的调度类
+	 */
 	private final RpcInvokerDispatcher dispatcher;
+
+	/**
+	 * 服务名称
+	 */
 	private final String name;
 
 	private InvokeProxy(Class<?> clazz) {
-		this.name = getName(clazz);
+		this.name = getServiceName(clazz);
 		this.dispatcher = new RpcInvokerDispatcher(name, clazz);
 	}
 
 	/**
-	 * 获取一级服务名称
+	 * 获取服务名称
 	 *
 	 * @param T Class 对象
 	 * @return 一级服务名称
 	 */
-	private String getName(Class<?> T) {
+	private String getServiceName(Class<?> T) {
 		final Consumer annotation = T.getAnnotation(Consumer.class);
 		if (annotation == null) {
 			throw new IllegalArgumentException("Can't found annotation in the interface,[interface name:{" + T.getSimpleName() + "}]");
 		}
-		final String[] value = annotation.value();
-		if (value.length == 0) {
+		final String value = annotation.value();
+		if (StringUtils.isNoneBlank(value)) {
 			throw new IllegalArgumentException("require value in consumer annotation");
 		}
-		return value[0];
+		return value;
 	}
 
 	@Override

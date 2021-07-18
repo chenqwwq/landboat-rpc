@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service;
+package com.wastedrivinggroup.service.listener;
 
 import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
 
@@ -10,7 +10,7 @@ import java.util.Set;
  * @author chen
  * @date 2021/7/15
  **/
-public interface ServiceListener {
+public interface ServiceListener extends Listener {
 
 	/**
 	 * 服务新增

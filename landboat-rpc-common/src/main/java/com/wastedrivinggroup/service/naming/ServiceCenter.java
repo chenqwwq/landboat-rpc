@@ -1,7 +1,7 @@
 package com.wastedrivinggroup.service.naming;
 
 import com.google.common.collect.Sets;
-import com.wastedrivinggroup.service.ServiceListener;
+import com.wastedrivinggroup.service.listener.ServiceListener;
 import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
 import lombok.extern.slf4j.Slf4j;
 
