@@ -5,10 +5,9 @@ import com.orbitz.consul.HealthClient;
 import com.orbitz.consul.model.ConsulResponse;
 import com.orbitz.consul.model.health.ServiceHealth;
 import com.wastedrivinggroup.service.naming.DiscoveryPolicy;
-import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
+import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 

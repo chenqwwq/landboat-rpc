@@ -1,11 +1,14 @@
 package com.wastedrivinggroup.service.listener;
 
-import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
+import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
+import com.wastedrivinggroup.service.ServiceCenter;
 
 import java.util.Set;
 
 /**
- * 对于 {@link com.wastedrivinggroup.service.naming.ServiceCenter} 的监听器
+ * 对于 {@link ServiceCenter} 的服务变动的监听器
+ * <p>
+ * 所有类都可以借由监听器感知服务的并作出对应动作
  *
  * @author chen
  * @date 2021/7/15

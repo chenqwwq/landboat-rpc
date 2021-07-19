@@ -1,6 +1,8 @@
 package com.wastedrivinggroup.service.naming;
 
+import com.wastedrivinggroup.annotation.SingleObject;
 import com.wastedrivinggroup.service.naming.consul.ConsulServiceRegister;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.List;
  * @author chen
  * @date 2021/6/19
  **/
+@Slf4j
+@SingleObject
 public class ServiceRegisterChain implements RegisterPolicy {
 	private static final ServiceRegisterChain INSTANCE = new ServiceRegisterChain();
 	private static final List<RegisterPolicy> POLICIES;

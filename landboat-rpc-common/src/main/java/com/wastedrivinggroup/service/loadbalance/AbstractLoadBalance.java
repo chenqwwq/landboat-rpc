@@ -1,16 +1,12 @@
 package com.wastedrivinggroup.service.loadbalance;
 
-import com.wastedrivinggroup.netty.channel.AbstractMappingChannelHolder;
-import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
-import io.netty.channel.Channel;
+import java.util.List;
 
 /**
  * @author chen
- * @date 2021-06-23
+ * @date 2021/7/19
  **/
-public class AbstractLoadBalance extends AbstractMappingChannelHolder<ServiceEndpoint> implements LoadBalance<Channel> {
-	@Override
-	public Channel choose() {
-		return null;
-	}
+public abstract class AbstractLoadBalance<T> extends ServiceList<T> implements LoadBalance<T> {
+
+
 }

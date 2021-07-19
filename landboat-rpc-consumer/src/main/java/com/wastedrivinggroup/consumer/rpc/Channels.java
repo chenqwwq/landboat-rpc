@@ -6,7 +6,7 @@ import com.wastedrivinggroup.netty.handler.ResponseReceiveHandler;
 import com.wastedrivinggroup.netty.proto.decoder.GsonDecoder;
 import com.wastedrivinggroup.netty.proto.demo.InvokeRespProto;
 import com.wastedrivinggroup.netty.proto.encoder.GsonEncoder;
-import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
+import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.pool.AbstractChannelPoolMap;
@@ -56,6 +56,7 @@ public class Channels extends AbstractChannelPoolMap<ServiceEndpoint, ChannelPoo
 
 	@Override
 	protected ChannelPool newPool(ServiceEndpoint key) {
+		// 固定大小的线程池,最大连接数为2,后续的最大连接数可以改为配置项
 		return new FixedChannelPool(bootstrapFactory.getBootstrap(key.getHost(), key.getPort()), new SimpleChannelPoolChannel(key), 2);
 	}
 
@@ -71,7 +72,7 @@ public class Channels extends AbstractChannelPoolMap<ServiceEndpoint, ChannelPoo
 		}
 
 		@Override
-		public void channelReleased(Channel ch) throws Exception {
+		public void channelReleased(Channel ch) {
 			if (log.isInfoEnabled()) {
 				log.info("channel released,[host:{},port:{}]", serviceEndpoint.getHost(), serviceEndpoint.getPort());
 			}

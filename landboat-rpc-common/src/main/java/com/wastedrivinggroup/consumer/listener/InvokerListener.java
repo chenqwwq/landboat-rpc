@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service.consumer.listener;
+package com.wastedrivinggroup.consumer.listener;
 
 import com.wastedrivinggroup.service.listener.Listener;
 

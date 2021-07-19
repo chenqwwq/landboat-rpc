@@ -1,6 +1,6 @@
 package com.wastedrivinggroup.service.naming;
 
-import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
+import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
 
 import java.util.Set;
 

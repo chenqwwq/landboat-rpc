@@ -1,8 +1,10 @@
 package com.wastedrivinggroup.service.naming;
 
 import com.google.common.collect.Sets;
+import com.wastedrivinggroup.annotation.SingleObject;
+import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
 import com.wastedrivinggroup.service.naming.consul.ConsulServiceDiscovery;
-import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.Set;
  * @author chen
  * @date 2021/6/20
  **/
+@Slf4j
+@SingleObject
 public class ServiceDiscoveryChain implements DiscoveryPolicy {
 
 	private static final ServiceDiscoveryChain INSTANCE = new ServiceDiscoveryChain();
@@ -24,7 +28,7 @@ public class ServiceDiscoveryChain implements DiscoveryPolicy {
 
 	static {
 		discoveries = new ArrayList<>();
-		discoveries.add(CacheableServiceDiscovery.wrap(new ConsulServiceDiscovery()));
+		discoveries.add(new ConsulServiceDiscovery());
 	}
 
 	public void addDiscoveryPolicy(DiscoveryPolicy policy) {

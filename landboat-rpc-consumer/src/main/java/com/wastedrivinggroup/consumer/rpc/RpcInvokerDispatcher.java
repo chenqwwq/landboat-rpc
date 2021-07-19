@@ -1,16 +1,15 @@
 package com.wastedrivinggroup.consumer.rpc;
 
 import com.google.gson.Gson;
+import com.wastedrivinggroup.service.ServiceCenter;
+import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
 import com.wastedrivinggroup.netty.proto.demo.InvokeReqProto;
 import com.wastedrivinggroup.service.RpcInvoker;
-import com.wastedrivinggroup.service.naming.ServiceCenter;
-import com.wastedrivinggroup.service.naming.ServiceDiscoveryChain;
-import com.wastedrivinggroup.service.pojo.ServiceEndpoint;
 import io.netty.channel.Channel;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 
@@ -53,6 +52,9 @@ public class RpcInvokerDispatcher {
 		if (!clazz.isInterface()) {
 			throw new IllegalArgumentException("initial RpcInvokerDispatcher failure,must be interface");
 		}
+		// TODO: 初始化时就发现服务,是否直接建立到服务端的连接
+		final List<ServiceEndpoint> endpointList = ServiceCenter.getEndpointList(name);
+		// 构造一个 LoadBalance 对象
 		this.dispatcher = new ConcurrentHashMap<>();
 		this.factory = factory;
 	}
@@ -81,8 +83,6 @@ public class RpcInvokerDispatcher {
 			final RpcClient annotation = method.getAnnotation(RpcClient.class);
 			this.functionName = annotation.value();
 
-			final Set<ServiceEndpoint> discovery = ServiceDiscoveryChain.getInstance().discovery(name);
-			ServiceCenter.addEndpoint(name, discovery);
 		}
 
 		@Override
@@ -90,10 +90,8 @@ public class RpcInvokerDispatcher {
 			// 封装请求
 			final InvokeReqProto req = wrapInvokeReq(method, args);
 			// 发送请求
-			final Set<ServiceEndpoint> endpointList = ServiceCenter.getEndpointList(serviceName);
-			final ServiceEndpoint serviceEndpoint = endpointList.stream().findAny().get();
-			final Channel channel = Channels.getInstance().get(serviceEndpoint).acquire().sync().get();
-			channel.writeAndFlush(req);
+////			final Channel channel = Channels.getInstance().get(serviceEndpoint).acquire().sync().get();
+//			channel.writeAndFlush(req);
 			// 发送请求后在接收请求前应该阻塞当前线程
 			// TODO: 异步转同步的方案可以重新设计以下,例如可以使用和 Dubbo 一样 CompletableFuture
 			String res = ResponseBuffer.getResp(req.getInvokeId());
