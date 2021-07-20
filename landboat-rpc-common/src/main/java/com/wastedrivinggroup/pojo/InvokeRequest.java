@@ -1,8 +1,6 @@
 package com.wastedrivinggroup.pojo;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author chen
@@ -10,4 +8,10 @@ import lombok.NoArgsConstructor;
  **/
 @Data
 public class InvokeRequest {
+
+	private Method method;
+
+	private String funcName;
+
+	private Object[] args;
 }
