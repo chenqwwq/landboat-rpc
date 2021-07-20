@@ -1,6 +1,6 @@
 package com.wastedrivinggroup.service.annotation;
 
-import com.wastedrivinggroup.service.naming.RegisterPolicy;
+import com.wastedrivinggroup.naming.RegisterPolicy;
 
 import java.lang.annotation.*;
 

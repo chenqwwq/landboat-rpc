@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.consumer.pojo;
+package com.wastedrivinggroup.pojo;
 
 import com.orbitz.consul.model.health.Service;
 import lombok.Data;

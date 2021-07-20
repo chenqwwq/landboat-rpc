@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service.naming.consul;
+package com.wastedrivinggroup.naming.consul;
 
 import java.util.Objects;
 

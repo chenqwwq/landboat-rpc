@@ -1,11 +1,11 @@
-package com.wastedrivinggroup.service.naming.consul;
+package com.wastedrivinggroup.naming.consul;
 
 import com.google.common.collect.Sets;
 import com.orbitz.consul.HealthClient;
 import com.orbitz.consul.model.ConsulResponse;
 import com.orbitz.consul.model.health.ServiceHealth;
-import com.wastedrivinggroup.service.naming.DiscoveryPolicy;
-import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
+import com.wastedrivinggroup.naming.DiscoveryPolicy;
+import com.wastedrivinggroup.pojo.ServiceEndpoint;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

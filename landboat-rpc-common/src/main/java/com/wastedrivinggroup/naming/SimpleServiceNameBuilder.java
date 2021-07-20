@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service.naming.utils;
+package com.wastedrivinggroup.naming;
 
 import java.lang.reflect.Method;
 

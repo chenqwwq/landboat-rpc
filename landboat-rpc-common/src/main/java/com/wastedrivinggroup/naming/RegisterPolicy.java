@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service.naming;
+package com.wastedrivinggroup.naming;
 
 /**
  * serviceName : ip:port

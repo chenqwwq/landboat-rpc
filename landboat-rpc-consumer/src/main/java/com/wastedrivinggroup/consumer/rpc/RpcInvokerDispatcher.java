@@ -1,11 +1,14 @@
 package com.wastedrivinggroup.consumer.rpc;
 
 import com.google.gson.Gson;
-import com.wastedrivinggroup.service.ServiceCenter;
-import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
 import com.wastedrivinggroup.netty.proto.demo.InvokeReqProto;
+import com.wastedrivinggroup.pojo.InvokeRequest;
+import com.wastedrivinggroup.pojo.InvokeResponse;
+import com.wastedrivinggroup.pojo.ServiceEndpoint;
 import com.wastedrivinggroup.service.RpcInvoker;
-import io.netty.channel.Channel;
+import com.wastedrivinggroup.service.ServiceCenter;
+import com.wastedrivinggroup.loadbalance.LoadBalance;
+import com.wastedrivinggroup.loadbalance.RoundRobinLoadBalance;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -38,6 +41,10 @@ public class RpcInvokerDispatcher {
 	private final RpcInvokerFactory factory;
 
 	/**
+	 * 负载均衡器
+	 */
+	LoadBalance<ServiceEndpoint> loadBalance;
+	/**
 	 * 服务名称
 	 */
 	private final String name;
@@ -55,6 +62,7 @@ public class RpcInvokerDispatcher {
 		// TODO: 初始化时就发现服务,是否直接建立到服务端的连接
 		final List<ServiceEndpoint> endpointList = ServiceCenter.getEndpointList(name);
 		// 构造一个 LoadBalance 对象
+		this.loadBalance = new RoundRobinLoadBalance<>(endpointList);
 		this.dispatcher = new ConcurrentHashMap<>();
 		this.factory = factory;
 	}
@@ -85,24 +93,29 @@ public class RpcInvokerDispatcher {
 
 		}
 
-		@Override
-		public Object invoke(Object[] args) throws InterruptedException, ExecutionException {
-			// 封装请求
-			final InvokeReqProto req = wrapInvokeReq(method, args);
-			// 发送请求
-////			final Channel channel = Channels.getInstance().get(serviceEndpoint).acquire().sync().get();
-//			channel.writeAndFlush(req);
-			// 发送请求后在接收请求前应该阻塞当前线程
-			// TODO: 异步转同步的方案可以重新设计以下,例如可以使用和 Dubbo 一样 CompletableFuture
-			String res = ResponseBuffer.getResp(req.getInvokeId());
-			return gson.fromJson(res, method.getGenericReturnType());
-		}
+//		@Override
+//		public Object invoke(Object[] args) throws InterruptedException, ExecutionException {
+//			// 封装请求
+//			final InvokeReqProto req = wrapInvokeReq(method, args);
+//			// 发送请求
+//////			final Channel channel = Channels.getInstance().get(serviceEndpoint).acquire().sync().get();
+////			channel.writeAndFlush(req);
+//			// 发送请求后在接收请求前应该阻塞当前线程
+//			// TODO: 异步转同步的方案可以重新设计以下,例如可以使用和 Dubbo 一样 CompletableFuture
+//			String res = ResponseBuffer.getResp(req.getInvokeId());
+//			return gson.fromJson(res, method.getGenericReturnType());
+//		}
 
 		private InvokeReqProto wrapInvokeReq(Method method, Object[] args) {
 			return new InvokeReqProto()
 					.setInvokeId(1L)
 					.setServiceName(functionName)
 					.setArgs(args);
+		}
+
+		@Override
+		public InvokeResponse invoke(InvokeRequest request) throws Exception {
+			return null;
 		}
 	}
 }

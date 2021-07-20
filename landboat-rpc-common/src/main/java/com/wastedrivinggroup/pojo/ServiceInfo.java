@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.consumer.pojo;
+package com.wastedrivinggroup.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

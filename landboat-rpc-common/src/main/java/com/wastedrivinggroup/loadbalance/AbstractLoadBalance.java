@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service.loadbalance;
+package com.wastedrivinggroup.loadbalance;
 
 import java.util.List;
 
@@ -9,4 +9,7 @@ import java.util.List;
 public abstract class AbstractLoadBalance<T> extends ServiceList<T> implements LoadBalance<T> {
 
 
+	public AbstractLoadBalance(List<T> services) {
+		super(services);
+	}
 }

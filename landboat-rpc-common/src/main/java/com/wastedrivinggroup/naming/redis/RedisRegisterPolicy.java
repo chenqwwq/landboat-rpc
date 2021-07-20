@@ -1,6 +1,6 @@
-package com.wastedrivinggroup.service.naming.redis;
+package com.wastedrivinggroup.naming.redis;
 
-import com.wastedrivinggroup.service.naming.AbstractRegisterPolicy;
+import com.wastedrivinggroup.naming.AbstractRegisterPolicy;
 import lombok.extern.slf4j.Slf4j;
 
 /**

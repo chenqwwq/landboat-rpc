@@ -1,9 +1,9 @@
-package com.wastedrivinggroup.service.naming;
+package com.wastedrivinggroup.naming;
 
 import com.google.common.collect.Sets;
 import com.wastedrivinggroup.annotation.SingleObject;
-import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
-import com.wastedrivinggroup.service.naming.consul.ConsulServiceDiscovery;
+import com.wastedrivinggroup.naming.consul.ConsulServiceDiscovery;
+import com.wastedrivinggroup.pojo.ServiceEndpoint;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

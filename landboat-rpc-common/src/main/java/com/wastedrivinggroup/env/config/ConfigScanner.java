@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.config;
+package com.wastedrivinggroup.env.config;
 
 /**
  * @author chen

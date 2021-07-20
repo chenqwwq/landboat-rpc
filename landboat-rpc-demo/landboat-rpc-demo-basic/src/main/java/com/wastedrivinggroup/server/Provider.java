@@ -2,7 +2,7 @@ package com.wastedrivinggroup.server;
 
 import com.wastedrivinggroup.provider.netty.ProviderBootstrap;
 import com.wastedrivinggroup.provider.service.ServiceDict;
-import com.wastedrivinggroup.service.naming.ServiceRegisterChain;
+import com.wastedrivinggroup.naming.ServiceRegisterChain;
 import lombok.extern.slf4j.Slf4j;
 
 /**

@@ -1,6 +1,6 @@
 package com.wastedrivinggroup.service.listener;
 
-import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
+import com.wastedrivinggroup.pojo.ServiceEndpoint;
 import com.wastedrivinggroup.service.ServiceCenter;
 
 import java.util.Set;

@@ -6,7 +6,7 @@ import com.wastedrivinggroup.netty.handler.ResponseReceiveHandler;
 import com.wastedrivinggroup.netty.proto.decoder.GsonDecoder;
 import com.wastedrivinggroup.netty.proto.demo.InvokeRespProto;
 import com.wastedrivinggroup.netty.proto.encoder.GsonEncoder;
-import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
+import com.wastedrivinggroup.pojo.ServiceEndpoint;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.pool.AbstractChannelPoolMap;

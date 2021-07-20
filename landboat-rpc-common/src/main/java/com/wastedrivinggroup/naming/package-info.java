@@ -6,7 +6,7 @@
  * 一级名称(服务名称 ServiceName) ： 二级名称(功能名称 Function Name))
  * <p>
  * 服务对外提供一个统一的一级服务名称
- * 可以使用 {@link com.wastedrivinggroup.service.naming.ServiceRegisterChain#registered(java.lang.String)} 向多个注册中西你注册
+ * 可以使用 {@link com.wastedrivinggroup.naming.ServiceRegisterChain#registered(java.lang.String)} 向多个注册中西你注册
  * <br>
  * 内部使用类名和方法名以及方法参数类型组成二级服务名称.
  * // TODO: 后续可以采用注解指定简短的服务名
@@ -30,13 +30,13 @@
  * 服务提供方根据二级服务名称定位到具体需要执行的方法，执行并返回对应结果，序列化并返回。
  *
  * <p>
- * {@link com.wastedrivinggroup.service.naming.RegisterPolicy} 为基础的服务注册接口
- * {@link com.wastedrivinggroup.service.naming.DiscoveryPolicy} 为基础的服务发现接口
+ * {@link com.wastedrivinggroup.naming.RegisterPolicy} 为基础的服务注册接口
+ * {@link com.wastedrivinggroup.naming.DiscoveryPolicy} 为基础的服务发现接口
  * <p>
- * {@link com.wastedrivinggroup.service.naming.consul} 保存的是以 Consul 为目标的服务注册和发现逻辑
- * {@link com.wastedrivinggroup.service.naming.redis} 保存的是以 Redis 为目标的服务注册和发现逻辑
+ * {@link com.wastedrivinggroup.naming.consul} 保存的是以 Consul 为目标的服务注册和发现逻辑
+ * {@link com.wastedrivinggroup.naming.redis} 保存的是以 Redis 为目标的服务注册和发现逻辑
  *
  * @author chen
  * @date 2021/7/9
  **/
-package com.wastedrivinggroup.service.naming;
+package com.wastedrivinggroup.naming;

@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service.naming;
+package com.wastedrivinggroup.naming;
 
 import java.util.HashSet;
 import java.util.Set;

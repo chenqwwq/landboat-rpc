@@ -1,10 +1,10 @@
-package com.wastedrivinggroup.service.naming.consul;
+package com.wastedrivinggroup.naming.consul;
 
 import com.orbitz.consul.AgentClient;
 import com.orbitz.consul.model.agent.ImmutableRegistration;
 import com.orbitz.consul.model.agent.Registration;
 import com.wastedrivinggroup.netty.server.config.NettyServerConfig;
-import com.wastedrivinggroup.service.naming.AbstractRegisterPolicy;
+import com.wastedrivinggroup.naming.AbstractRegisterPolicy;
 import com.wastedrivinggroup.utils.GracefulShutdown;
 import com.wastedrivinggroup.utils.GracefulShutdownChain;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
-package com.wastedrivinggroup.service.naming;
+package com.wastedrivinggroup.naming;
 
 import com.wastedrivinggroup.annotation.SingleObject;
-import com.wastedrivinggroup.service.naming.consul.ConsulServiceRegister;
+import com.wastedrivinggroup.naming.consul.ConsulServiceRegister;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

@@ -11,4 +11,4 @@
  * @author chen
  * @date 2021/7/19
  **/
-package com.wastedrivinggroup.service.loadbalance;
+package com.wastedrivinggroup.loadbalance;

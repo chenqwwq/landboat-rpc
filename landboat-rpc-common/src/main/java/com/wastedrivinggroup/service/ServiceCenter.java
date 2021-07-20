@@ -2,9 +2,9 @@ package com.wastedrivinggroup.service;
 
 import com.google.common.collect.Lists;
 import com.wastedrivinggroup.annotation.NoInstanceObject;
-import com.wastedrivinggroup.consumer.pojo.ServiceEndpoint;
+import com.wastedrivinggroup.pojo.ServiceEndpoint;
 import com.wastedrivinggroup.service.listener.ServiceListener;
-import com.wastedrivinggroup.service.naming.ServiceDiscoveryChain;
+import com.wastedrivinggroup.naming.ServiceDiscoveryChain;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @NoInstanceObject
 public class ServiceCenter {
 	/**
-	 * 在构建 {@link com.wastedrivinggroup.service.loadbalance.LoadBalance} 的时候最好不要重新包装集合,
+	 * 在构建 {@link com.wastedrivinggroup.loadbalance.LoadBalance} 的时候最好不要重新包装集合,
 	 * <p>
 	 * 原集合的修改可以直接反应到负载均衡的服务列表
 	 */

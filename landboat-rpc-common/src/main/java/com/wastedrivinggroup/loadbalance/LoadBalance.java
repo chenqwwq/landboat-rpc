@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service.loadbalance;
+package com.wastedrivinggroup.loadbalance;
 
 /**
  * 负载均衡顶级接口

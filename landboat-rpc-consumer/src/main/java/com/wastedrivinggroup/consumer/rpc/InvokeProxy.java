@@ -1,5 +1,7 @@
 package com.wastedrivinggroup.consumer.rpc;
 
+import com.wastedrivinggroup.pojo.InvokeRequest;
+import com.wastedrivinggroup.pojo.InvokeResponse;
 import com.wastedrivinggroup.service.RpcInvoker;
 import com.wastedrivinggroup.service.annotation.Consumer;
 import lombok.extern.slf4j.Slf4j;
@@ -71,12 +73,18 @@ public class InvokeProxy implements InvocationHandler {
 			return method.invoke(proxy, args);
 		}
 
+		// 获取执行的方法
 		final RpcInvoker rpcInvoker = dispatcher.getRpcInvoker(method);
 		if (Objects.isNull(rpcInvoker)) {
 			log.error("rpc invoker not found,[className:{},methodName:{}]", method.getClass().getName(), method.getName());
 			throw new IllegalArgumentException("invok failure, rpc invoker not found");
 		}
-		return rpcInvoker.invoke(args);
+
+		// 封装请求
+		InvokeRequest request = new InvokeRequest();
+
+
+		return null;
 	}
 
 	// Create Proxy

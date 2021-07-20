@@ -1,6 +1,6 @@
-package com.wastedrivinggroup.service.naming.zookeeper;
+package com.wastedrivinggroup.naming.zookeeper;
 
-import com.wastedrivinggroup.service.naming.AbstractRegisterPolicy;
+import com.wastedrivinggroup.naming.AbstractRegisterPolicy;
 
 /**
  * @author chen

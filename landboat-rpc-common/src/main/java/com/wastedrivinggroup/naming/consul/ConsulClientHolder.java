@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service.naming.consul;
+package com.wastedrivinggroup.naming.consul;
 
 import com.google.common.net.HostAndPort;
 import com.orbitz.consul.AgentClient;

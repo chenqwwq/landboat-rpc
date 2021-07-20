@@ -1,6 +1,6 @@
 package com.wastedrivinggroup.provider.service;
 
-import com.wastedrivinggroup.service.naming.utils.SimpleServiceNameBuilder;
+import com.wastedrivinggroup.naming.SimpleServiceNameBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
