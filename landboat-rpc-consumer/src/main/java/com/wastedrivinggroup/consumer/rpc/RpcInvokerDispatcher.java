@@ -5,10 +5,10 @@ import com.wastedrivinggroup.netty.proto.demo.InvokeReqProto;
 import com.wastedrivinggroup.pojo.InvokeResponse;
 import com.wastedrivinggroup.pojo.Request;
 import com.wastedrivinggroup.pojo.RpcRequest;
-import com.wastedrivinggroup.service.Consumer;
 import com.wastedrivinggroup.service.ExceptionHandler;
 import com.wastedrivinggroup.service.Func;
 import com.wastedrivinggroup.service.RpcInvoker;
+import com.wastedrivinggroup.service.Service;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -61,7 +61,7 @@ public class RpcInvokerDispatcher {
 		if (!clazz.isInterface()) {
 			throw new IllegalArgumentException("initial RpcInvokerDispatcher failure,must be interface");
 		}
-		final Consumer annotation = clazz.getAnnotation(Consumer.class);
+		final Service annotation = clazz.getAnnotation(Service.class);
 		if (annotation == null) {
 			throw new IllegalArgumentException("Can't found annotation in the interface,[interface name:{" + clazz.getSimpleName() + "}]");
 		}
@@ -102,7 +102,7 @@ public class RpcInvokerDispatcher {
 		private InvokeReqProto wrapInvokeReq(Object[] args) {
 			return new InvokeReqProto()
 					.setInvokeId(1L)
-					.setServiceName(functionName)
+					.setFunc(functionName)
 					.setArgs(args);
 		}
 

@@ -3,7 +3,7 @@ package com.wastedrivinggroup.service;
 import com.google.common.collect.Lists;
 import com.wastedrivinggroup.annotation.NoInstanceObject;
 import com.wastedrivinggroup.pojo.ServiceEndpoint;
-import com.wastedrivinggroup.naming.ServiceDiscoveryChain;
+import com.wastedrivinggroup.naming.ServiceDiscoveries;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class ServiceCenter {
 	}
 
 	public static List<ServiceEndpoint> getEndpointList(String name) {
-		return DATA.getOrDefault(name, addEndpoint(name, Lists.newArrayList(ServiceDiscoveryChain.getInstance().discovery(name))));
+		return DATA.getOrDefault(name, addEndpoint(name, Lists.newArrayList(ServiceDiscoveries.getInstance().discovery(name))));
 	}
 
 	public static List<ServiceEndpoint> addEndpoint(String serviceName, List<ServiceEndpoint> endpoints) {

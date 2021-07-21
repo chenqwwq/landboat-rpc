@@ -19,8 +19,8 @@ import java.util.List;
  **/
 @Slf4j
 @SingleObject
-public class ServiceRegisterChain implements RegisterPolicy {
-	private static final ServiceRegisterChain INSTANCE = new ServiceRegisterChain();
+public class ServiceRegisters implements RegisterPolicy {
+	private static final ServiceRegisters INSTANCE = new ServiceRegisters();
 	private static final List<RegisterPolicy> POLICIES;
 
 	static {
@@ -48,7 +48,7 @@ public class ServiceRegisterChain implements RegisterPolicy {
 
 	// single instance
 
-	public static ServiceRegisterChain getInstance() {
+	public static ServiceRegisters getInstance() {
 		return INSTANCE;
 	}
 

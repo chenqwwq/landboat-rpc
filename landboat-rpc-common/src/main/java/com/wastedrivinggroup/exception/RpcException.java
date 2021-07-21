@@ -1,17 +1,18 @@
 package com.wastedrivinggroup.exception;
 
-import com.wastedrivinggroup.env.Constant;
+import lombok.Getter;
 
 /**
  * @author chen
  * @date 2021/6/15
  **/
+@Getter
 public class RpcException extends BaseException {
 
 	/**
 	 * 错误码
 	 * <p>
-	 * {@link Constant.ErrCode}
+	 * {@link com.wastedrivinggroup.env.InvokeCode }
 	 */
 	private int code;
 

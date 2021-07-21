@@ -16,11 +16,11 @@ import java.util.Set;
  **/
 @Slf4j
 @SingleObject
-public class ServiceDiscoveryChain implements DiscoveryPolicy {
+public class ServiceDiscoveries implements DiscoveryPolicy {
 
-	private static final ServiceDiscoveryChain INSTANCE = new ServiceDiscoveryChain();
+	private static final ServiceDiscoveries INSTANCE = new ServiceDiscoveries();
 
-	public static ServiceDiscoveryChain getInstance() {
+	public static ServiceDiscoveries getInstance() {
 		return INSTANCE;
 	}
 

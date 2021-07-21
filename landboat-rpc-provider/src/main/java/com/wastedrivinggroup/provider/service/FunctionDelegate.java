@@ -2,6 +2,7 @@ package com.wastedrivinggroup.provider.service;
 
 
 import com.wastedrivinggroup.exception.ServiceNotFoundException;
+import com.wastedrivinggroup.provider.pojp.ReflectFunction;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
@@ -13,11 +14,11 @@ import java.util.Objects;
  * @author chen
  * @date 2021/6/15
  **/
-public class ServiceDelegate {
+public class FunctionDelegate {
 
 	public static Object invoke(String serviceName, Object[] args) throws InvocationTargetException, IllegalAccessException {
-		final ServiceDict holder = ServiceDict.getInstance();
-		final ServiceDict.ReflectService service = holder.findService(serviceName);
+		final FunctionDict holder = FunctionDict.getInstance();
+		final ReflectFunction service = holder.findService(serviceName);
 		if (Objects.isNull(service)) {
 			throw new ServiceNotFoundException(serviceName);
 		}

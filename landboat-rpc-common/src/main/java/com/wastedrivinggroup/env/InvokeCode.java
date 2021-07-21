@@ -19,9 +19,12 @@ public interface InvokeCode {
 	}
 
 	interface ErrCode {
+
+		int UNKNOWN_ERR = -1;
+
 		/**
 		 * 服务未找到
 		 */
-		int SERVICE_NOT_FOUND = -1;
+		int SERVICE_NOT_FOUND = -2;
 	}
 }

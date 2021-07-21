@@ -19,7 +19,7 @@ public class InvokeReqProto {
 
 	private Long invokeId;
 
-	private String serviceName;
+	private String func;
 
 	private Object[] args;
 }

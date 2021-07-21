@@ -7,7 +7,7 @@
  * 一级名称(服务名称 ServiceName) ： 二级名称(功能名称 Function Name))
  * <p>
  * 服务对外提供一个统一的一级服务名称
- * 可以使用 {@link com.wastedrivinggroup.naming.ServiceRegisterChain#registered(java.lang.String)} 向多个注册中西你注册
+ * 可以使用 {@link com.wastedrivinggroup.naming.ServiceRegisters#registered(java.lang.String)} 向多个注册中西你注册
  * <br>
  * 内部使用类名和方法名以及方法参数类型组成二级服务名称.
  * // TODO: 后续可以采用注解指定简短的服务名

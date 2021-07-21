@@ -5,7 +5,7 @@ import com.wastedrivinggroup.loadbalance.LoadBalance;
 import com.wastedrivinggroup.loadbalance.RoundRobinLoadBalance;
 import com.wastedrivinggroup.pojo.RpcRequest;
 import com.wastedrivinggroup.pojo.ServiceEndpoint;
-import com.wastedrivinggroup.service.Consumer;
+import com.wastedrivinggroup.service.Service;
 import com.wastedrivinggroup.service.RpcInvoker;
 import com.wastedrivinggroup.service.ServiceCenter;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import java.util.Objects;
  * 不共用的原因是隔离一些基本的处理类，类似异常处理等，每个服务可能会有不同的报错信息
  * // TODO: 异常处理可以后续实现
  * <p>
- * 构造函数需要传递一个接口类,在创建的时候可以直接解析接口上的注解,{@link Consumer}
+ * 构造函数需要传递一个接口类,在创建的时候可以直接解析接口上的注解,{@link Service}
  * 所以一个 InvokeProxy 只对应一个服务
  * // TODO: 注解中可以添加该类的异常处理
  * <p>

@@ -13,6 +13,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Expose {
 
+	/**
+	 * @return 功能名称
+	 */
 	String value();
 
 }
