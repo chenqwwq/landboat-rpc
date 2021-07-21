@@ -6,6 +6,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.LockSupport;
 
 /**
+ * 临时的同步和异步转换
+ *
  * @author chen
  * @date 2021/6/17
  **/

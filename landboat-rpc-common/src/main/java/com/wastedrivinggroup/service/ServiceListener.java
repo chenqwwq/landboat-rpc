@@ -1,5 +1,6 @@
-package com.wastedrivinggroup.service.listener;
+package com.wastedrivinggroup.service;
 
+import com.wastedrivinggroup.listener.Listener;
 import com.wastedrivinggroup.pojo.ServiceEndpoint;
 import com.wastedrivinggroup.service.ServiceCenter;
 

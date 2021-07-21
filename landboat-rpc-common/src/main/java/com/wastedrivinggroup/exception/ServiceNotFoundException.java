@@ -1,6 +1,7 @@
 package com.wastedrivinggroup.exception;
 
-import com.wastedrivinggroup.service.Constant;
+import com.wastedrivinggroup.env.Constant;
+import com.wastedrivinggroup.env.InvokeCode;
 
 /**
  * @author chen
@@ -9,6 +10,6 @@ import com.wastedrivinggroup.service.Constant;
 public class ServiceNotFoundException extends RpcException {
 
 	public ServiceNotFoundException(String serviceName) {
-		super(Constant.ErrCode.SERVICE_NOT_FOUND, serviceName + "服务未找到");
+		super(InvokeCode.ErrCode.SERVICE_NOT_FOUND, serviceName, "服务未找到");
 	}
 }

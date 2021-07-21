@@ -1,5 +1,6 @@
 package com.wastedrivinggroup.consumer.rpc;
 
+import com.wastedrivinggroup.annotation.SingleObject;
 import com.wastedrivinggroup.netty.client.BootstrapFactory;
 import com.wastedrivinggroup.netty.handler.DebugLogHandler;
 import com.wastedrivinggroup.netty.handler.ResponseReceiveHandler;
@@ -19,13 +20,16 @@ import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.ExecutionException;
+
 /**
- * 保存客户端的 Channel 集合,保存服务到 Channel 的映射
+ * 使用 ChannelPool 保存到服务端的 Channel
  *
  * @author chen
  * @date 2021/7/12
  **/
 @Slf4j
+@SingleObject
 public class Channels extends AbstractChannelPoolMap<ServiceEndpoint, ChannelPool> {
 
 	private static final Channels INSTANCE = new Channels();
@@ -58,6 +62,13 @@ public class Channels extends AbstractChannelPoolMap<ServiceEndpoint, ChannelPoo
 	protected ChannelPool newPool(ServiceEndpoint key) {
 		// 固定大小的线程池,最大连接数为2,后续的最大连接数可以改为配置项
 		return new FixedChannelPool(bootstrapFactory.getBootstrap(key.getHost(), key.getPort()), new SimpleChannelPoolChannel(key), 2);
+	}
+
+	/**
+	 * 同步获取 Channel
+	 */
+	public Channel syncGet(ServiceEndpoint endpoint) throws InterruptedException, ExecutionException {
+		return get(endpoint).acquire().sync().get();
 	}
 
 

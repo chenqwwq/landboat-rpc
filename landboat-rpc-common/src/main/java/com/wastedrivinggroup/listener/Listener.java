@@ -1,6 +1,4 @@
-package com.wastedrivinggroup.service.listener;
-
-import java.util.Comparator;
+package com.wastedrivinggroup.listener;
 
 /**
  * @author chen

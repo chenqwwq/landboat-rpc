@@ -13,7 +13,6 @@ public abstract class BaseChain<O> {
 
 	private Consumer<List<O>> afterAdd = os -> {
 		// DEFAULT DO NOTHING
-		return;
 	};
 
 	public BaseChain() {

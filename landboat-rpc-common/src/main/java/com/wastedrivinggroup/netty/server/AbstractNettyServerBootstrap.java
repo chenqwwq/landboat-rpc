@@ -12,6 +12,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -56,7 +57,7 @@ public abstract class AbstractNettyServerBootstrap implements RpcBootstrap {
 		init();
 		serverBootstrap.bind(NettyServerConfig.getHost(), NettyServerConfig.getPort()).sync().addListener((ChannelFutureListener) future -> {
 			if (future.isSuccess()) {
-				// TODO: 设置监听器,例如服务的注册都需要通过监听器来实现，确保在 Netty 服务起来之后再注册【】
+				// TODO: 设置监听器,例如服务的注册都需要通过监听器来实现，确保在 Netty 服务起来之后再注册
 				if (log.isInfoEnabled()) {
 					log.info("rpc server start success,[host:{},port:{}]", NettyServerConfig.getHost(), NettyServerConfig.getPort());
 				}
@@ -80,7 +81,7 @@ public abstract class AbstractNettyServerBootstrap implements RpcBootstrap {
 		static AtomicInteger threadCnt = new AtomicInteger();
 
 		@Override
-		public Thread newThread(Runnable runnable) {
+		public Thread newThread(@NotNull Runnable runnable) {
 			return new Thread(runnable, "RPC_SERVER_THREAD_" + threadCnt.incrementAndGet());
 		}
 	}

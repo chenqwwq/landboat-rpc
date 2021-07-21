@@ -1,5 +1,6 @@
 package com.wastedrivinggroup.netty.proto.demo;
 
+import com.wastedrivinggroup.env.InvokeCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,4 +37,23 @@ public class InvokeRespProto {
 	 * FIXME: 使用 Object 类型作为返回值，服务端传出为 Integer,但是客户端接收 gson 解码后为 Double,目前是直接以 String 传递返回结果,根据结果类型再次用 gson 解码
 	 */
 	private String ret;
+
+	public static InvokeRespProto ofSuccess(Long invokeId, String ret) {
+		return ofSuccess(InvokeCode.SUCCESS, invokeId, ret);
+	}
+
+	public static InvokeRespProto ofSuccess(Integer invokeCode, Long invokeId, String ret) {
+		return new InvokeRespProto()
+				.setInvokeId(invokeId)
+				.setInvokeCode(invokeCode)
+				.setRet(ret);
+	}
+
+	public static InvokeRespProto ofFailure(Integer invokeCode, Long invokeId, String errMemo) {
+		return new InvokeRespProto()
+				.setInvokeId(invokeId)
+				.setErrMemo(errMemo)
+				.setInvokeCode(invokeCode);
+	}
+
 }

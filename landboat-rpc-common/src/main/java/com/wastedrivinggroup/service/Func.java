@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.consumer.rpc;
+package com.wastedrivinggroup.service;
 
 import java.lang.annotation.*;
 
@@ -9,9 +9,14 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface RpcClient {
+public @interface Func {
 	/**
 	 * @return 二级服务名称
 	 */
 	String value();
+
+	/**
+	 * @return 异常处理类
+	 */
+	Class<?> exceptionHandle() default EmptyExceptionHandler.class;
 }

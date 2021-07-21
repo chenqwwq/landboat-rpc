@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service.annotation;
+package com.wastedrivinggroup.service;
 
 import com.wastedrivinggroup.naming.RegisterPolicy;
 

@@ -1,7 +1,7 @@
 package com.wastedrivinggroup.service;
 
-import com.wastedrivinggroup.pojo.InvokeRequest;
 import com.wastedrivinggroup.pojo.InvokeResponse;
+import com.wastedrivinggroup.pojo.Request;
 
 /**
  * 执行具体的 Rpc 调用接口
@@ -16,11 +16,11 @@ public interface RpcInvoker {
 	/**
 	 * 远程调用方法
 	 *
-	 * @param request 远程调用请求，{@link InvokeRequest}
+	 * @param request 远程调用请求，{@link com.wastedrivinggroup.pojo.Request}
 	 * @return 返回值 {@link InvokeResponse} 返回值
 	 * @throws Exception 包含如下:
 	 *                   - InterruptedException 调用中断
 	 */
-	InvokeResponse invoke(InvokeRequest request) throws Exception;
+	InvokeResponse invoke(Request request) throws Exception;
 
 }

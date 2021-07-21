@@ -1,15 +1,19 @@
 package com.wastedrivinggroup.consumer.rpc;
 
-import com.wastedrivinggroup.pojo.InvokeRequest;
-import com.wastedrivinggroup.pojo.InvokeResponse;
+import com.wastedrivinggroup.exception.NoEndpointFoundException;
+import com.wastedrivinggroup.loadbalance.LoadBalance;
+import com.wastedrivinggroup.loadbalance.RoundRobinLoadBalance;
+import com.wastedrivinggroup.pojo.RpcRequest;
+import com.wastedrivinggroup.pojo.ServiceEndpoint;
+import com.wastedrivinggroup.service.Consumer;
 import com.wastedrivinggroup.service.RpcInvoker;
-import com.wastedrivinggroup.service.annotation.Consumer;
+import com.wastedrivinggroup.service.ServiceCenter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,7 +23,7 @@ import java.util.Objects;
  * 不共用的原因是隔离一些基本的处理类，类似异常处理等，每个服务可能会有不同的报错信息
  * // TODO: 异常处理可以后续实现
  * <p>
- * 构造函数需要传递一个接口类,在创建的时候可以直接解析接口上的注解,{@link com.wastedrivinggroup.service.annotation.Consumer}
+ * 构造函数需要传递一个接口类,在创建的时候可以直接解析接口上的注解,{@link Consumer}
  * 所以一个 InvokeProxy 只对应一个服务
  * // TODO: 注解中可以添加该类的异常处理
  * <p>
@@ -43,28 +47,20 @@ public class InvokeProxy implements InvocationHandler {
 	 */
 	private final String name;
 
-	private InvokeProxy(Class<?> clazz) {
-		this.name = getServiceName(clazz);
-		this.dispatcher = new RpcInvokerDispatcher(name, clazz);
+	/**
+	 * 负载均衡器
+	 */
+	LoadBalance<ServiceEndpoint> loadBalance;
+
+	private InvokeProxy(Class<?> clazz) throws InstantiationException, IllegalAccessException {
+		this.dispatcher = new RpcInvokerDispatcher(clazz);
+		this.name = dispatcher.getName();
+		// TODO: 初始化时就发现服务,是否直接建立到服务端的连接
+		final List<ServiceEndpoint> endpointList = ServiceCenter.getEndpointList(name);
+		// 构造一个 LoadBalance 对象
+		this.loadBalance = new RoundRobinLoadBalance<>(endpointList);
 	}
 
-	/**
-	 * 获取服务名称
-	 *
-	 * @param T Class 对象
-	 * @return 一级服务名称
-	 */
-	private String getServiceName(Class<?> T) {
-		final Consumer annotation = T.getAnnotation(Consumer.class);
-		if (annotation == null) {
-			throw new IllegalArgumentException("Can't found annotation in the interface,[interface name:{" + T.getSimpleName() + "}]");
-		}
-		final String value = annotation.value();
-		if (StringUtils.isNoneBlank(value)) {
-			throw new IllegalArgumentException("require value in consumer annotation");
-		}
-		return value;
-	}
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -80,21 +76,29 @@ public class InvokeProxy implements InvocationHandler {
 			throw new IllegalArgumentException("invok failure, rpc invoker not found");
 		}
 
+		// 负载均衡
+		final ServiceEndpoint choose = loadBalance.choose();
+		if (Objects.isNull(choose)) {
+			throw new NoEndpointFoundException(name);
+		}
+
 		// 封装请求
-		InvokeRequest request = new InvokeRequest();
+		RpcRequest request = new RpcRequest()
+				.setArgs(args)
+				.setEndpoint(choose);
 
-
-		return null;
+		// 调用
+		return rpcInvoker.invoke(request);
 	}
 
 	// Create Proxy
 
-	public static <T> T createProxy(Class<T> interfaces) {
+	public static <T> T createProxy(Class<T> interfaces) throws Exception {
 		return createProxy(Thread.currentThread().getContextClassLoader(), interfaces);
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> T createProxy(ClassLoader classLoader, Class<T> interfaces) {
+	public static <T> T createProxy(ClassLoader classLoader, Class<T> interfaces) throws Exception {
 		// 使用 JDK 动态代理只能作用于接口
 		if (!interfaces.isInterface()) {
 			throw new IllegalArgumentException("can only be applied to interface");

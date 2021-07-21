@@ -2,19 +2,20 @@ package com.wastedrivinggroup.consumer.rpc;
 
 import com.google.gson.Gson;
 import com.wastedrivinggroup.netty.proto.demo.InvokeReqProto;
-import com.wastedrivinggroup.pojo.InvokeRequest;
 import com.wastedrivinggroup.pojo.InvokeResponse;
-import com.wastedrivinggroup.pojo.ServiceEndpoint;
+import com.wastedrivinggroup.pojo.Request;
+import com.wastedrivinggroup.pojo.RpcRequest;
+import com.wastedrivinggroup.service.Consumer;
+import com.wastedrivinggroup.service.ExceptionHandler;
+import com.wastedrivinggroup.service.Func;
 import com.wastedrivinggroup.service.RpcInvoker;
-import com.wastedrivinggroup.service.ServiceCenter;
-import com.wastedrivinggroup.loadbalance.LoadBalance;
-import com.wastedrivinggroup.loadbalance.RoundRobinLoadBalance;
+import io.netty.channel.Channel;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
 
 /**
  * 在 {@link InvokeProxy} 中被持有
@@ -27,6 +28,7 @@ import java.util.concurrent.ExecutionException;
  * @author chen
  * @date 2021/7/13
  **/
+@Slf4j
 public class RpcInvokerDispatcher {
 	/**
 	 * 每个方法对应的调用的实现
@@ -41,28 +43,34 @@ public class RpcInvokerDispatcher {
 	private final RpcInvokerFactory factory;
 
 	/**
-	 * 负载均衡器
-	 */
-	LoadBalance<ServiceEndpoint> loadBalance;
-	/**
 	 * 服务名称
 	 */
 	private final String name;
 
+	/**
+	 * 异常处理器
+	 */
+	private final ExceptionHandler exceptionHandler;
 
-	public RpcInvokerDispatcher(String name, Class<?> clazz) {
-		this(name, method -> new DefaultRpcInvoker(method, name), clazz);
+
+	public RpcInvokerDispatcher(Class<?> clazz) throws InstantiationException, IllegalAccessException {
+		this(DefaultRpcInvoker::new, clazz);
 	}
 
-	public RpcInvokerDispatcher(String name, RpcInvokerFactory factory, Class<?> clazz) {
-		this.name = name;
+	public RpcInvokerDispatcher(RpcInvokerFactory factory, Class<?> clazz) throws InstantiationException, IllegalAccessException {
 		if (!clazz.isInterface()) {
 			throw new IllegalArgumentException("initial RpcInvokerDispatcher failure,must be interface");
 		}
-		// TODO: 初始化时就发现服务,是否直接建立到服务端的连接
-		final List<ServiceEndpoint> endpointList = ServiceCenter.getEndpointList(name);
-		// 构造一个 LoadBalance 对象
-		this.loadBalance = new RoundRobinLoadBalance<>(endpointList);
+		final Consumer annotation = clazz.getAnnotation(Consumer.class);
+		if (annotation == null) {
+			throw new IllegalArgumentException("Can't found annotation in the interface,[interface name:{" + clazz.getSimpleName() + "}]");
+		}
+		final String value = annotation.value();
+		if (StringUtils.isNoneBlank(value)) {
+			throw new IllegalArgumentException("require value in consumer annotation");
+		}
+		this.name = value;
+		this.exceptionHandler = annotation.exceptionHandler().newInstance();
 		this.dispatcher = new ConcurrentHashMap<>();
 		this.factory = factory;
 	}
@@ -82,31 +90,16 @@ public class RpcInvokerDispatcher {
 		private final Gson gson;
 		private final Method method;
 		private final String functionName;
-		private final String serviceName;
 
-		public DefaultRpcInvoker(Method method, String name) {
+		public DefaultRpcInvoker(Method method) {
 			this.gson = new Gson();
 			this.method = method;
-			this.serviceName = name;
-			final RpcClient annotation = method.getAnnotation(RpcClient.class);
+			final Func annotation = method.getAnnotation(Func.class);
 			this.functionName = annotation.value();
 
 		}
 
-//		@Override
-//		public Object invoke(Object[] args) throws InterruptedException, ExecutionException {
-//			// 封装请求
-//			final InvokeReqProto req = wrapInvokeReq(method, args);
-//			// 发送请求
-//////			final Channel channel = Channels.getInstance().get(serviceEndpoint).acquire().sync().get();
-////			channel.writeAndFlush(req);
-//			// 发送请求后在接收请求前应该阻塞当前线程
-//			// TODO: 异步转同步的方案可以重新设计以下,例如可以使用和 Dubbo 一样 CompletableFuture
-//			String res = ResponseBuffer.getResp(req.getInvokeId());
-//			return gson.fromJson(res, method.getGenericReturnType());
-//		}
-
-		private InvokeReqProto wrapInvokeReq(Method method, Object[] args) {
+		private InvokeReqProto wrapInvokeReq(Object[] args) {
 			return new InvokeReqProto()
 					.setInvokeId(1L)
 					.setServiceName(functionName)
@@ -114,8 +107,24 @@ public class RpcInvokerDispatcher {
 		}
 
 		@Override
-		public InvokeResponse invoke(InvokeRequest request) throws Exception {
-			return null;
+		public InvokeResponse invoke(Request request) throws Exception {
+			if (!(request instanceof RpcRequest)) {
+				throw new IllegalArgumentException("Request And Invoker not match");
+			}
+			RpcRequest rpc = (RpcRequest) request;
+
+			final InvokeReqProto invokeReq = wrapInvokeReq(rpc.getArgs());
+
+			final Channel channel = Channels.getInstance().syncGet(rpc.getEndpoint());
+
+			channel.writeAndFlush(invokeReq);
+
+			// TODO: 异步转同步的方案可以重新设计以下,例如可以使用和 Dubbo 一样 CompletableFuture
+			return gson.fromJson(ResponseBuffer.getResp(invokeReq.getInvokeId()), method.getGenericReturnType());
 		}
+	}
+
+	public String getName() {
+		return name;
 	}
 }

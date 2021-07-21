@@ -3,7 +3,6 @@ package com.wastedrivinggroup.service;
 import com.google.common.collect.Lists;
 import com.wastedrivinggroup.annotation.NoInstanceObject;
 import com.wastedrivinggroup.pojo.ServiceEndpoint;
-import com.wastedrivinggroup.service.listener.ServiceListener;
 import com.wastedrivinggroup.naming.ServiceDiscoveryChain;
 import lombok.extern.slf4j.Slf4j;
 

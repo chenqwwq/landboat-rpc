@@ -1,7 +1,7 @@
 package com.wastedrivinggroup.client;
 
-import com.wastedrivinggroup.consumer.rpc.RpcClient;
-import com.wastedrivinggroup.service.annotation.Consumer;
+import com.wastedrivinggroup.service.Func;
+import com.wastedrivinggroup.service.Consumer;
 
 /**
  * @author chen
@@ -10,6 +10,6 @@ import com.wastedrivinggroup.service.annotation.Consumer;
 @Consumer("echo")
 public interface EchoServiceApi {
 
-	@RpcClient("EchoService:echo:String")
+	@Func("EchoService:echo:String")
 	String echo(String sentence);
 }

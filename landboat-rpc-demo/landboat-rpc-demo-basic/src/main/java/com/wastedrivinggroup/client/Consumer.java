@@ -10,7 +10,7 @@ public class Consumer {
 
 	public static final String serviceName = "echo";
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws Exception{
 		final EchoServiceApi proxy = InvokeProxy.createProxy(EchoServiceApi.class);
 		final String echo = proxy.echo("老子天下无敌");
 		System.out.println(echo);
