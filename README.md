@@ -41,6 +41,5 @@ RpcInvokerDispatcher -->> InvokeProxy: 3. 返回 RpcInvoker
 InvokeProxy ->> LoadBalance: 4. 获取服务器地址
 InvokeProxy ->> RpcInvoker: 5. 创建 Request 并调用
 RpcInvoker -->> InvokeProxy: 6. 调用成功直接返回
-RpcInvoker -->> ExceptionHandler: 7. 异常处理
-
+	RpcInvoker -->> ExceptionHandler: 7. 异常处理
 ```
