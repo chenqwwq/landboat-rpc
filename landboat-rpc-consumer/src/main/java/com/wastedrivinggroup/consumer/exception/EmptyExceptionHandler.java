@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.service;
+package com.wastedrivinggroup.consumer.exception;
 
 import com.wastedrivinggroup.exception.RpcException;
 

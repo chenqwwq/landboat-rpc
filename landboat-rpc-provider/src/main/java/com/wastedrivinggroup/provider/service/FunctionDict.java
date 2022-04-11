@@ -1,11 +1,12 @@
 package com.wastedrivinggroup.provider.service;
 
 import com.wastedrivinggroup.annotation.SingleObject;
-import com.wastedrivinggroup.provider.pojp.ReflectFunction;
+import com.wastedrivinggroup.exception.ServiceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashSet;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -22,54 +23,58 @@ import java.util.concurrent.ConcurrentHashMap;
 @SingleObject
 public class FunctionDict implements FunctionLoader<ReflectFunction> {
 
-	/**
-	 * 服务名称到具体执行方法的隐射关系
-	 */
-	private final ConcurrentHashMap<String, ReflectFunction> services;
+    /**
+     * 服务名称到具体执行方法的隐射关系
+     */
+    private final ConcurrentHashMap<String, ReflectFunction> services;
 
-	/**
-	 * 已经加载的类对象
-	 */
-	private final HashSet<Class<?>> loaded;
+    /**
+     * 服务加载器
+     * <p>
+     * {@link SimpleFunctionLoader}
+     */
+    private final FunctionLoader<ReflectFunction> functionLoader;
 
-	/**
-	 * 服务加载器
-	 * <p>
-	 * {@link SimpleFunctionLoader}
-	 */
-	private final FunctionLoader<ReflectFunction> functionLoader;
+    public FunctionDict() {
+        if (log.isInfoEnabled()) {
+            log.info("initialize ServiceHolder success");
+        }
+        services = new ConcurrentHashMap<>();
+        functionLoader = new SimpleFunctionLoader();
+    }
 
-	public FunctionDict() {
-		if (log.isInfoEnabled()) {
-			log.info("initialize ServiceHolder success");
-		}
-		services = new ConcurrentHashMap<>();
-		loaded = new HashSet<>();
-		functionLoader = new SimpleFunctionLoader();
-	}
+    public static FunctionDict getInstance() {
+        return InstanceHolder.INSTANCE;
+    }
 
-	public static FunctionDict getInstance() {
-		return InstanceHolder.INSTANCE;
-	}
+    public ReflectFunction findService(String serviceName) {
+        return services.get(serviceName);
+    }
 
-	public ReflectFunction findService(String serviceName) {
-		return services.get(serviceName);
-	}
+    @Override
+    public Map<String, ReflectFunction> loadService(Object target) {
+        final Map<String, ReflectFunction> map = functionLoader.loadService(target);
+        services.putAll(map);
+        return map;
+    }
 
-	@Override
-	public Map<String, ReflectFunction> loadService(Object target) {
-		final Map<String, ReflectFunction> map = functionLoader.loadService(target);
-		services.putAll(map);
-		return map;
-	}
+    public static Object invoke(String name, Object[] args) throws InvocationTargetException, IllegalAccessException {
+        final FunctionDict holder = FunctionDict.getInstance();
+        final ReflectFunction func = holder.findService(name);
+        if (Objects.isNull(func)) {
+            throw new ServiceNotFoundException(name);
+        }
 
-	/**
-	 * 静态内部类实现单例
-	 */
-	private static final class InstanceHolder {
+        return func.getHandler().handle(func,args);
+    }
 
-		private static final FunctionDict INSTANCE = new FunctionDict();
+    /**
+     * 静态内部类实现单例
+     */
+    private static final class InstanceHolder {
 
-	}
+        private static final FunctionDict INSTANCE = new FunctionDict();
+
+    }
 
 }

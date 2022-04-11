@@ -1,7 +1,5 @@
 package com.wastedrivinggroup.consumer.rpc;
 
-import com.wastedrivinggroup.service.RpcInvoker;
-
 import java.lang.reflect.Method;
 
 /**
@@ -13,12 +11,12 @@ import java.lang.reflect.Method;
 @FunctionalInterface
 public interface RpcInvokerFactory {
 
-	/**
-	 * 创建 {@link RpcInvoker}
-	 *
-	 * @param method 对应的方法
-	 * @return 具体的调用实现类
-	 */
-	RpcInvoker getInvoke(Method method);
+    /**
+     * 创建 {@link RpcInvoker}
+     *
+     * @param method 对应的方法
+     * @return 具体的调用实现类
+     */
+    RpcInvoker getInvoke(Method method, InvokeProxy proxy);
 
 }

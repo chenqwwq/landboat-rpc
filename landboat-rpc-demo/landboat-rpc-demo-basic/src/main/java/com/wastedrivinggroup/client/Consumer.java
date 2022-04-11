@@ -8,11 +8,11 @@ import com.wastedrivinggroup.consumer.rpc.InvokeProxy;
  **/
 public class Consumer {
 
-	public static final String serviceName = "echo";
+    public static final String serviceName = "echo";
 
-	public static void main(String[] args) throws Exception{
-		final EchoServiceApi proxy = InvokeProxy.createProxy(EchoServiceApi.class);
-		final String echo = proxy.echo("老子天下无敌");
-		System.out.println(echo);
-	}
+    public static void main(String[] args) throws Exception {
+
+        final EchoServiceApi proxy = InvokeProxy.createProxy(EchoServiceApi.class, "localhost", 8889);
+        System.out.println(proxy.echo("1231"));
+    }
 }

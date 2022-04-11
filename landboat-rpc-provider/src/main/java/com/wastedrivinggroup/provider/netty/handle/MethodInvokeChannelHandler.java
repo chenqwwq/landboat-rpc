@@ -5,7 +5,8 @@ import com.wastedrivinggroup.env.InvokeCode;
 import com.wastedrivinggroup.exception.RpcException;
 import com.wastedrivinggroup.netty.proto.demo.InvokeReqProto;
 import com.wastedrivinggroup.netty.proto.demo.InvokeRespProto;
-import com.wastedrivinggroup.provider.service.FunctionDelegate;
+import com.wastedrivinggroup.provider.service.FunctionDict;
+import com.wastedrivinggroup.provider.service.ReflectFunctionHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,7 @@ import java.util.Arrays;
  * @date 2021/6/16
  **/
 @Slf4j
-public class MethodInvokeHandler extends SimpleChannelInboundHandler<InvokeReqProto> {
+public class MethodInvokeChannelHandler extends SimpleChannelInboundHandler<InvokeReqProto> {
 
 	Gson gson = new Gson();
 
@@ -31,7 +32,7 @@ public class MethodInvokeHandler extends SimpleChannelInboundHandler<InvokeReqPr
 		// 实际调用得到结果
 		InvokeRespProto result;
 		try {
-			final Object invoke = FunctionDelegate.invoke(msg.getFunc(), msg.getArgs());
+			final Object invoke = FunctionDict.invoke(msg.getFunc(), msg.getArgs());
 			result = InvokeRespProto.ofSuccess(msg.getInvokeId(), gson.toJson(invoke));
 		} catch (RpcException rpcException) {
 			result = InvokeRespProto.ofFailure(rpcException.getCode(), msg.getInvokeId(), rpcException.getMessage());

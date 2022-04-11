@@ -1,6 +1,6 @@
 package com.wastedrivinggroup.client;
 
-import com.wastedrivinggroup.service.Func;
+import com.wastedrivinggroup.consumer.annotation.Func;
 import com.wastedrivinggroup.service.Service;
 
 /**
@@ -10,6 +10,6 @@ import com.wastedrivinggroup.service.Service;
 @Service("echo")
 public interface EchoServiceApi {
 
-	@Func("EchoService:echo:String")
-	String echo(String sentence);
+    @Func("echo")
+    String echo(String sentence);
 }

@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EchoService {
 
-	@Expose("echo")
+	@Expose(value = "echo")
 	public String echo(String sentence) {
 		log.debug("echo from sentence:{}", sentence);
 		return sentence;

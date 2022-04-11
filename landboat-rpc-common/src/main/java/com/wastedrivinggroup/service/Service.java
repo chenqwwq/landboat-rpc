@@ -12,16 +12,13 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Service {
-	/**
-	 * @return 服务名称
-	 */
-	String value();
+    /**
+     * @return 服务名称
+     */
+    String value() default "";
 
-	/**
-	 * 优先于 {@link Func} 的异常处理
-	 *
-	 * @return 异常处理类
-	 */
-	Class<? extends ExceptionHandler> exceptionHandler() default DefaultExceptionHandler.class;
-
+    /**
+     * @return 服务地址
+     */
+    String url() default "";
 }

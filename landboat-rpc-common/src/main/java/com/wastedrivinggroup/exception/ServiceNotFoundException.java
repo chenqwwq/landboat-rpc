@@ -1,6 +1,5 @@
 package com.wastedrivinggroup.exception;
 
-import com.wastedrivinggroup.env.Constant;
 import com.wastedrivinggroup.env.InvokeCode;
 
 /**

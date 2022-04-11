@@ -47,14 +47,11 @@ public class ConsumerBootstrap extends AbstractNettyClientBootstrap {
 						ch.pipeline().addLast(new DebugLogHandler());
 					}
 				});
-		ChannelHolder.getInstance().setChannel(bootstrap.connect("127.0.1.1", 8889).addListener(new ChannelFutureListener() {
-			@Override
-			public void operationComplete(ChannelFuture future) throws Exception {
-				if (future.isSuccess()) {
-					log.info("connect server success.");
-				} else {
-					log.info("connect server failure.");
-				}
+		ChannelHolder.getInstance().setChannel(bootstrap.connect("127.0.1.1", 8889).addListener((ChannelFutureListener) future -> {
+			if (future.isSuccess()) {
+				log.info("connect server success.");
+			} else {
+				log.info("connect server failure.");
 			}
 		}).sync().channel());
 	}
