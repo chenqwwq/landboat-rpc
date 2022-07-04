@@ -72,7 +72,6 @@ public class InvokeProxy implements InvocationHandler {
         return Channels.getInstance().syncGet(endpoint);
     }
 
-    // Create Proxy
     public static <T> T createProxy(Class<T> interfaces, String host, int port) throws Exception {
         return createProxy(interfaces, BaseEndpoint.create(host, port));
     }

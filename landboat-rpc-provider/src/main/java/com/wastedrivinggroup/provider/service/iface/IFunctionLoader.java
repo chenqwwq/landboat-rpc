@@ -1,4 +1,4 @@
-package com.wastedrivinggroup.provider.service;
+package com.wastedrivinggroup.provider.service.iface;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import java.util.Map;
  * @date 2021/7/21
  **/
 @FunctionalInterface
-public interface FunctionLoader<V> {
+public interface IFunctionLoader<V> {
     /**
      * 加载 Function
      * <p>
@@ -18,5 +18,5 @@ public interface FunctionLoader<V> {
      * @param target 从该实例中加载服务
      * @return 返回所有加载的服务
      */
-    <C> Map<String, V> loadService(C target);
+    <C> Map<String, V> loadFunc(C target);
 }
