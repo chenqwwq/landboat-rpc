@@ -27,8 +27,8 @@ import java.util.concurrent.ExecutionException;
 /**
  * 使用 ChannelPool 保存到服务端的 Channel
  *
- * @author chen
- * @date 2021/7/12
+ * @author 沽酒
+ * @since 2021/7/12
  **/
 @Slf4j
 @SingleObject

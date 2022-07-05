@@ -7,8 +7,8 @@ import com.wastedrivinggroup.provider.service.iface.IFunctionHandler;
 import java.util.function.Function;
 
 /**
- * @author chenqwwq
- * @date 2022/5/30
+ * @author 沽酒
+ * @since 2022/5/30
  **/
 public abstract class AbstractCommand<T, R> extends AbstractFunction implements ICommand<T, R> {
 

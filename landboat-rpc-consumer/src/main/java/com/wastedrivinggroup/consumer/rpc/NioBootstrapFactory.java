@@ -9,8 +9,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import java.net.SocketAddress;
 
 /**
- * @author chen
- * @date 2021/7/12
+ * @author 沽酒
+ * @since 2021/7/12
  **/
 public class NioBootstrapFactory implements DirectionBootstrapFactory {
 	@Override

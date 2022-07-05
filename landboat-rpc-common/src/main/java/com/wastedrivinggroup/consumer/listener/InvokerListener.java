@@ -5,8 +5,8 @@ import com.wastedrivinggroup.listener.Listener;
 import java.lang.reflect.Method;
 
 /**
- * @author chen
- * @date 2021/7/18
+ * @author 沽酒
+ * @since 2021/7/18
  **/
 public interface InvokerListener extends Listener {
 

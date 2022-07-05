@@ -3,8 +3,8 @@ package com.wastedrivinggroup.client;
 import com.wastedrivinggroup.consumer.rpc.InvokeProxy;
 
 /**
- * @author chen
- * @date 2021/5/2
+ * @author 沽酒
+ * @since 2021/5/2
  **/
 public class Consumer {
 

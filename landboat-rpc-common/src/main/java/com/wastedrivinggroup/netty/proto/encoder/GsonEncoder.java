@@ -14,8 +14,8 @@ import java.util.List;
  * <p>
  * 由 {@link MessageToMessageEncoder#write(ChannelHandlerContext, Object, ChannelPromise)} } 之类的 writed 方法触发
  *
- * @author chen
- * @date 2021/5/3
+ * @author 沽酒
+ * @since 2021/5/3
  **/
 public class GsonEncoder extends MessageToMessageEncoder<Object> {
 

@@ -5,8 +5,8 @@ import java.util.Map;
 /**
  * Function Loader
  *
- * @author chen
- * @date 2021/7/21
+ * @author 沽酒
+ * @since 2021/7/21
  **/
 @FunctionalInterface
 public interface IFunctionLoader<V> {

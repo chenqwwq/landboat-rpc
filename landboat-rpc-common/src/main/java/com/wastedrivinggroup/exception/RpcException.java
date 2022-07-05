@@ -4,8 +4,8 @@ import com.wastedrivinggroup.exception.BaseException;
 import lombok.Getter;
 
 /**
- * @author chen
- * @date 2021/6/15
+ * @author 沽酒
+ * @since 2021/6/15
  **/
 @Getter
 public class RpcException extends BaseException {

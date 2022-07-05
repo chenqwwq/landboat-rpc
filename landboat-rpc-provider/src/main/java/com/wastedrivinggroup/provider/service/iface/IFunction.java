@@ -1,8 +1,8 @@
 package com.wastedrivinggroup.provider.service.iface;
 
 /**
- * @author chenqwwq
- * @date 2022/4/7
+ * @author 沽酒
+ * @since 2022/4/7
  **/
 public interface IFunction {
 

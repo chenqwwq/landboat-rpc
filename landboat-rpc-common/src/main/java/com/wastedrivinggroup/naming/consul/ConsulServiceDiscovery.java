@@ -14,8 +14,8 @@ import java.util.Set;
 /**
  * 基于 {@link com.orbitz.consul.Consul} 的服务发现方法
  *
- * @author chen
- * @date 2021/6/19
+ * @author 沽酒
+ * @since 2021/6/19
  **/
 @Slf4j
 public class ConsulServiceDiscovery implements DiscoveryPolicy {

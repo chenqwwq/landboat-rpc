@@ -8,8 +8,8 @@ import java.util.concurrent.locks.LockSupport;
 /**
  * 临时的同步和异步转换
  *
- * @author chen
- * @date 2021/6/17
+ * @author 沽酒
+ * @since 2021/6/17
  **/
 @Slf4j
 public class ResponseBuffer {

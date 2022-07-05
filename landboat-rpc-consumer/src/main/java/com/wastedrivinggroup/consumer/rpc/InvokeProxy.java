@@ -19,8 +19,8 @@ import java.util.concurrent.ExecutionException;
  * <p>
  * 每个接口创建一个 {@link InvokeProxy}
  *
- * @author chen
- * @date 2021/6/16
+ * @author 沽酒
+ * @since 2021/6/16
  **/
 @Slf4j
 public class InvokeProxy implements InvocationHandler {

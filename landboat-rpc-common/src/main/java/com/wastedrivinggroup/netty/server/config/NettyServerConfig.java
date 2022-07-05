@@ -6,8 +6,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * @author chen
- * @date 2021/4/16
+ * @author 沽酒
+ * @since 2021/4/16
  **/
 public class NettyServerConfig {
 

@@ -7,8 +7,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author chen
- * @date 2021/6/18
+ * @author 沽酒
+ * @since 2021/6/18
  **/
 @Slf4j
 public class ResponseReceiveHandler extends SimpleChannelInboundHandler<InvokeRespProto> {

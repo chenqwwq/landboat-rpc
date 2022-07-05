@@ -1,8 +1,8 @@
 package com.wastedrivinggroup.exception;
 
 /**
- * @author chen
- * @date 2021-07-21
+ * @author 沽酒
+ * @since 2021-07-21
  **/
 public class BaseException extends RuntimeException {
 

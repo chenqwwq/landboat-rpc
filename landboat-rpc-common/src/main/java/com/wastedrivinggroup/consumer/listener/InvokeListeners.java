@@ -11,8 +11,8 @@ import java.lang.reflect.Method;
  * 观察者模式本来需要被观察者持有观察者的引用,
  * // TODO: 评估，是否由一个全局类持有可能更好处理一点
  *
- * @author chen
- * @date 2021/7/18
+ * @author 沽酒
+ * @since 2021/7/18
  **/
 @Slf4j
 public class InvokeListeners extends BaseChain<InvokerListener> implements InvokerListener {

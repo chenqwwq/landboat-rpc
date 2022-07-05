@@ -9,8 +9,8 @@ import java.util.Objects;
  * Channel 的持有类
  * TODO: 后续可能提升为接口，改用{@link io.netty.channel.pool.ChannelPool},依旧可以使用该类获取
  *
- * @author chen
- * @date 2021/6/16
+ * @author 沽酒
+ * @since 2021/6/16
  **/
 public class SingleChannelHolder implements ChannelHolder<Void> {
 

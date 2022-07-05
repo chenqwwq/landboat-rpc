@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author chen
- * @date 2021-06-18
+ * @author 沽酒
+ * @since 2021-06-18
  **/
 public abstract class AbstractRegisterPolicy implements RegisterPolicy {
 

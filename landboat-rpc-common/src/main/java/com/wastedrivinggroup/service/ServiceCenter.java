@@ -18,8 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * 统一的管理所有的服务端内容，方便统一的更新以及监听
  *
- * @author chen
- * @date 2021/6/19
+ * @author 沽酒
+ * @since 2021/6/19
  **/
 @Slf4j
 @NoInstanceObject

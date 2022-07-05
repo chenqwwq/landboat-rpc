@@ -5,8 +5,8 @@ import com.wastedrivinggroup.exception.RpcException;
 /**
  * Rpc调用过程中的的异常处理器
  *
- * @author chen
- * @date 2021-07-21
+ * @author 沽酒
+ * @since 2021-07-21
  **/
 @FunctionalInterface
 public interface ExceptionHandler {

@@ -4,8 +4,8 @@ import com.wastedrivinggroup.provider.service.annotation.Expose;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author chen
- * @date 2021/6/15
+ * @author 沽酒
+ * @since 2021/6/15
  **/
 @Slf4j
 public class EchoService {

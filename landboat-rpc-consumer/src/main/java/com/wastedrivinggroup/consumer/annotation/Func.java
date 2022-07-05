@@ -7,8 +7,8 @@ import java.lang.annotation.*;
 /**
  * 申明需要调用的方法名称
  *
- * @author chen
- * @date 2021/7/14
+ * @author 沽酒
+ * @since 2021/7/14
  **/
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

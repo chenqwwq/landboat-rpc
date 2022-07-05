@@ -13,8 +13,8 @@ import java.util.List;
  * <p>
  * {@link ByteBuf} 表示需要解码的类型,在 Pipeline 的 channelRead 事件中如果类型为 {@link ByteBuf} 都会经过该解码器
  *
- * @author chen
- * @date 2021/5/3
+ * @author 沽酒
+ * @since 2021/5/3
  **/
 @Slf4j
 public class GsonDecoder<E> extends MessageToMessageDecoder<ByteBuf> {

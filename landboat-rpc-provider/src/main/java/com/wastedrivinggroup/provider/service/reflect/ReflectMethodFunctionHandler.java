@@ -11,8 +11,8 @@ import java.lang.reflect.InvocationTargetException;
  * 服务调用代理,主要处理服务的各类调用情景
  * {@link MethodInvokeChannelHandler}
  *
- * @author chen
- * @date 2021/6/15
+ * @author 沽酒
+ * @since 2021/6/15
  **/
 public class ReflectMethodFunctionHandler implements IFunctionHandler {
 

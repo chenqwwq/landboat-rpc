@@ -37,7 +37,7 @@
  * {@link com.wastedrivinggroup.naming.consul} 保存的是以 Consul 为目标的服务注册和发现逻辑
  * {@link com.wastedrivinggroup.naming.redis} 保存的是以 Redis 为目标的服务注册和发现逻辑
  *
- * @author chen
- * @date 2021/7/9
+ * @author 沽酒
+ * @since 2021/7/9
  **/
 package com.wastedrivinggroup.naming;

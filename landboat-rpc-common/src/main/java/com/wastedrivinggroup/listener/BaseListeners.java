@@ -7,8 +7,8 @@ import java.util.Comparator;
 /**
  * 监听器链的基础实现
  *
- * @author chen
- * @date 2021/7/18
+ * @author 沽酒
+ * @since 2021/7/18
  **/
 public class BaseListeners<O extends Listener> extends BaseChain<O> implements Listener {
 

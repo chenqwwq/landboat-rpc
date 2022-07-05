@@ -6,8 +6,8 @@ import io.netty.channel.ChannelPromise;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author chen
- * @date 2021/5/2
+ * @author 沽酒
+ * @since 2021/5/2
  **/
 @Slf4j
 public class DebugLogHandler extends ChannelDuplexHandler {

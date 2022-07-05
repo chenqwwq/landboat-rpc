@@ -3,8 +3,8 @@ package com.wastedrivinggroup.naming;
 /**
  * serviceName : ip:port
  *
- * @author chen
- * @date 2021-04-16
+ * @author 沽酒
+ * @since 2021-04-16
  **/
 public interface RegisterPolicy {
 

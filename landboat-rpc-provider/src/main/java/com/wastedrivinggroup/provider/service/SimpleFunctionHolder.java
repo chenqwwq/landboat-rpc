@@ -22,8 +22,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * 持有 {@link IFunctionLoader} 的引用，可以用于加载服务
  *
- * @author chen
- * @date 2021/6/15
+ * @author 沽酒
+ * @since 2021/6/15
  **/
 @Slf4j
 @SingleObject

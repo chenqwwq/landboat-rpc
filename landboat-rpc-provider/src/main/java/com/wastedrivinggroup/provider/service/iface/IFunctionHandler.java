@@ -3,8 +3,8 @@ package com.wastedrivinggroup.provider.service.iface;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * @author chenqwwq
- * @date 2022/4/12
+ * @author 沽酒
+ * @since 2022/4/12
  **/
 @FunctionalInterface
 public interface IFunctionHandler {

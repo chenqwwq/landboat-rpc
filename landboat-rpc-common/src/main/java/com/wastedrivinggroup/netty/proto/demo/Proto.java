@@ -5,8 +5,8 @@ import io.netty.buffer.ByteBuf;
 import java.io.Serializable;
 
 /**
- * @author chen
- * @date 2021/5/3
+ * @author 沽酒
+ * @since 2021/5/3
  **/
 public interface Proto extends Serializable {
 

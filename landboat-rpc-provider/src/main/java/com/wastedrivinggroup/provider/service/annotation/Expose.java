@@ -5,8 +5,8 @@ import java.lang.annotation.*;
 /**
  * 暴露服务的注解
  *
- * @author chen
- * @date 2021/7/18
+ * @author 沽酒
+ * @since 2021/7/18
  **/
 @Documented
 @Target({ElementType.METHOD, ElementType.TYPE})

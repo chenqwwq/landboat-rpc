@@ -1,8 +1,8 @@
 package com.wastedrivinggroup.netty.proto.exception;
 
 /**
- * @author chen
- * @date 2021/5/4
+ * @author 沽酒
+ * @since 2021/5/4
  **/
 public class BadProtoFormatException extends RuntimeException {
     public BadProtoFormatException(String message) {

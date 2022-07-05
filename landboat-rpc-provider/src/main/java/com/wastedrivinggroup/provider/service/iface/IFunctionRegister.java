@@ -3,8 +3,8 @@ package com.wastedrivinggroup.provider.service.iface;
 import com.wastedrivinggroup.provider.service.command.ICommand;
 
 /**
- * @author chenqwwq
- * @date 2022/6/1
+ * @author 沽酒
+ * @since 2022/6/1
  **/
 public interface IFunctionRegister {
     /**

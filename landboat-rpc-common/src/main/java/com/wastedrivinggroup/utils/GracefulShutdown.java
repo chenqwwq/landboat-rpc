@@ -3,8 +3,8 @@ package com.wastedrivinggroup.utils;
 /**
  * 优雅停机接口
  *
- * @author chen
- * @date 2021/6/20
+ * @author 沽酒
+ * @since 2021/6/20
  **/
 public interface GracefulShutdown {
 

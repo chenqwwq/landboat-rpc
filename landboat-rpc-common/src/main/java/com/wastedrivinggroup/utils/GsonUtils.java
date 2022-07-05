@@ -5,8 +5,8 @@ import com.google.gson.Gson;
 import java.lang.reflect.Type;
 
 /**
- * @author chenqwwq
- * @date 2022/4/7
+ * @author 沽酒
+ * @since 2022/4/7
  **/
 public class GsonUtils {
     private static final Gson gson = new Gson();

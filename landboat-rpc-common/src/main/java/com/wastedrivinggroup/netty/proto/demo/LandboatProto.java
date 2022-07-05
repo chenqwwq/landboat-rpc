@@ -3,8 +3,8 @@ package com.wastedrivinggroup.netty.proto.demo;
 import io.netty.buffer.ByteBuf;
 
 /**
- * @author chen
- * @date 2021/4/17
+ * @author 沽酒
+ * @since 2021/4/17
  **/
 public abstract class LandboatProto implements Proto {
     /**

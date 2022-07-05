@@ -11,8 +11,8 @@ import java.util.Set;
  * <p>
  * 所有类都可以借由监听器感知服务的并作出对应动作
  *
- * @author chen
- * @date 2021/7/15
+ * @author 沽酒
+ * @since 2021/7/15
  **/
 public interface ServiceListener extends Listener {
 

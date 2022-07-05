@@ -9,8 +9,8 @@ import io.netty.handler.codec.MessageToByteEncoder;
  * TODO:
  * 自定义解码器
  *
- * @author chen
- * @date 2021/5/3
+ * @author 沽酒
+ * @since 2021/5/3
  **/
 public class LandboaProtoEncoder extends MessageToByteEncoder<LandboatProto> {
 

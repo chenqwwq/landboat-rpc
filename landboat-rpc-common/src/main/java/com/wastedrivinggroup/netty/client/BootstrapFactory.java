@@ -8,8 +8,8 @@ import java.net.SocketAddress;
 /**
  * 消费者端口的 Bootstrap
  *
- * @author chen
- * @date 2021/7/12
+ * @author 沽酒
+ * @since 2021/7/12
  **/
 @FunctionalInterface
 public interface BootstrapFactory {

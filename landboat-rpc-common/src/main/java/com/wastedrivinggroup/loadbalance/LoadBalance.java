@@ -3,8 +3,8 @@ package com.wastedrivinggroup.loadbalance;
 /**
  * 负载均衡顶级接口
  *
- * @author chen
- * @date 2021-06-18
+ * @author 沽酒
+ * @since 2021-06-18
  **/
 @FunctionalInterface
 public interface LoadBalance<T> {

@@ -3,8 +3,8 @@ package com.wastedrivinggroup.exception;
 import com.wastedrivinggroup.env.InvokeCode;
 
 /**
- * @author chen
- * @date 2021/6/15
+ * @author 沽酒
+ * @since 2021/6/15
  **/
 public class ServiceNotFoundException extends RpcException {
 

@@ -3,8 +3,8 @@ package com.wastedrivinggroup.naming.consul;
 import java.util.Objects;
 
 /**
- * @author chen
- * @date 2021/6/19
+ * @author 沽酒
+ * @since 2021/6/19
  **/
 public class ConsulConfig {
 

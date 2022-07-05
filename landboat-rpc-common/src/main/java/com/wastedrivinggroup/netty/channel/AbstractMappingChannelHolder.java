@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @author chen
- * @date 2021/6/22
+ * @author 沽酒
+ * @since 2021/6/22
  **/
 @Slf4j
 public class AbstractMappingChannelHolder<K> implements ChannelHolder<K> {

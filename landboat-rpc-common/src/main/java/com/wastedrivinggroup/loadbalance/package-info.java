@@ -18,7 +18,7 @@
  * 服务列表的同步可以使用观察者模式监听 {@link com.wastedrivinggroup.service.ServiceCenter} 的变化
  * 或者直接持有 {@link com.wastedrivinggroup.service.ServiceCenter} 的服务列表的引用
  *
- * @author chen
- * @date 2021/7/19
+ * @author 沽酒
+ * @since 2021/7/19
  **/
 package com.wastedrivinggroup.loadbalance;

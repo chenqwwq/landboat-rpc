@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * @author chen
- * @date 2021/7/18
+ * @author 沽酒
+ * @since 2021/7/18
  **/
 public abstract class BaseChain<O> {
 	private final List<O> data;

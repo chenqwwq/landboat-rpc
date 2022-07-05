@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * @author chen
- * @date 2021/6/20
+ * @author 沽酒
+ * @since 2021/6/20
  **/
 @Slf4j
 public class GracefulShutdownChain implements GracefulShutdown {

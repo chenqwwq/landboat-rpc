@@ -7,8 +7,8 @@ import com.wastedrivinggroup.pojo.Request;
  * 执行具体的 Rpc 调用接口
  * <p>
  *
- * @author chen
- * @date 2021/7/13
+ * @author 沽酒
+ * @since 2021/7/13
  **/
 @FunctionalInterface
 public interface RpcInvoker {

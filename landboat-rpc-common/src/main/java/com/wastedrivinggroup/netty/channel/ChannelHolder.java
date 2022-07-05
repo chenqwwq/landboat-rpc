@@ -5,8 +5,8 @@ import io.netty.channel.Channel;
 /**
  * Channel 的持有这
  *
- * @author chen
- * @date 2021/6/21
+ * @author 沽酒
+ * @since 2021/6/21
  **/
 public interface ChannelHolder<T> {
 

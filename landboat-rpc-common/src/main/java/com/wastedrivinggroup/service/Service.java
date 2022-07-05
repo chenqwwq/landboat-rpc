@@ -5,8 +5,8 @@ import java.lang.annotation.*;
 /**
  * 声明调用的一级服务名称
  *
- * @author chen
- * @date 2021/7/11
+ * @author 沽酒
+ * @since 2021/7/11
  **/
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

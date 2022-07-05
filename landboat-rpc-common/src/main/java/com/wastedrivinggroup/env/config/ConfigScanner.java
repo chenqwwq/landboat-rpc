@@ -1,8 +1,8 @@
 package com.wastedrivinggroup.env.config;
 
 /**
- * @author chen
- * @date 2021-06-18
+ * @author 沽酒
+ * @since 2021-06-18
  **/
 public interface ConfigScanner {
 

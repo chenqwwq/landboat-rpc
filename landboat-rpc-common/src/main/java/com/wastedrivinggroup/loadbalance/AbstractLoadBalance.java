@@ -3,8 +3,8 @@ package com.wastedrivinggroup.loadbalance;
 import java.util.List;
 
 /**
- * @author chen
- * @date 2021/7/19
+ * @author 沽酒
+ * @since 2021/7/19
  **/
 public abstract class AbstractLoadBalance<T> extends ServiceList<T> implements LoadBalance<T> {
 
